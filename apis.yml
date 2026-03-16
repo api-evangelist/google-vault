@@ -1,5 +1,5 @@
 aid: google-vault
-name: Google Vault APIs
+name: Google Vault
 description: A collection of APIs for Google Vault, an information governance and eDiscovery tool for Google Workspace
 image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
 url: https://developers.google.com/vault
