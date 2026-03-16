@@ -1,10 +1,12 @@
+aid: google-vault
 name: Google Vault APIs
 description: A collection of APIs for Google Vault, an information governance and eDiscovery tool for Google Workspace
 image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-created: '2025'
-modified: '2025'
-specificationVersion: '0.18'
-url: https://apis.json/google-vault
+url: https://developers.google.com/vault
+created: '2025-01-01'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+type: Index
 apis:
 - name: Google Vault API
   description: The Google Vault API allows developers to manage matters, holds, searches, and exports for Google Vault. It enables programmatic access to eDiscovery and information governance capabilities for Google Workspace data.
@@ -47,6 +49,5 @@ common:
 - type: Blog
   url: https://workspace.google.com/blog/
 maintainers:
-- FN: Google
-  email: ''
-  url: https://www.google.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
