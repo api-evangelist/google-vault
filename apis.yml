@@ -44,7 +44,7 @@ common:
     url: https://developers.google.com/identity/protocols/oauth2
   - type: Console
     url: https://console.cloud.google.com/
-  - type: Status
+  - type: StatusPage
     url: https://www.google.com/appsstatus/dashboard/
   - type: ChangeLog
     url: https://developers.google.com/vault/release-notes
