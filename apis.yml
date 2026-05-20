@@ -38,6 +38,8 @@ apis:
         url: https://support.google.com/vault
         email: ''
 common:
+  - type: GitHubOrganization
+    url: https://github.com/googleworkspace
   - type: GettingStarted
     url: https://developers.google.com/vault/quickstart
   - type: Authentication
