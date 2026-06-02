@@ -2,13 +2,13 @@
   "repo": "google-vault",
   "feeds": [
     {
-      "source": "https://workspace.google.com/blog/",
-      "feed_url": "",
+      "source": "https://developers.google.com/vault/release-notes",
+      "feed_url": "https://developers.google.com/feeds/vault-release-notes.xml",
       "title": "",
       "saved": 0,
-      "error": "no_feed"
+      "method": "discovered"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
