@@ -1,0 +1,793 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Matters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List matters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List matters"
+        },
+        {
+          "info": {
+            "name": "Create matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create matter"
+        },
+        {
+          "info": {
+            "name": "Get matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get matter"
+        },
+        {
+          "info": {
+            "name": "Update matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update matter"
+        },
+        {
+          "info": {
+            "name": "Delete matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete matter"
+        },
+        {
+          "info": {
+            "name": "Close a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:close",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Close a matter"
+        },
+        {
+          "info": {
+            "name": "Reopen a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:reopen",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reopen a matter"
+        },
+        {
+          "info": {
+            "name": "Undelete a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:undelete",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Undelete a matter"
+        },
+        {
+          "info": {
+            "name": "Count accounts processed by a query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:count",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Count accounts processed by a query"
+        },
+        {
+          "info": {
+            "name": "Add collaborator to matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:addPermissions",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add collaborator to matter"
+        },
+        {
+          "info": {
+            "name": "Remove collaborator from matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:removePermissions",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove collaborator from matter"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/exports",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List exports"
+        },
+        {
+          "info": {
+            "name": "Create export",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/exports",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create export"
+        },
+        {
+          "info": {
+            "name": "Get export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/exports/:exportId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get export"
+        },
+        {
+          "info": {
+            "name": "Delete export",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/exports/:exportId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete export"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Holds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List holds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List holds"
+        },
+        {
+          "info": {
+            "name": "Create hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create hold"
+        },
+        {
+          "info": {
+            "name": "Get hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get hold"
+        },
+        {
+          "info": {
+            "name": "Update hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update hold"
+        },
+        {
+          "info": {
+            "name": "Delete hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete hold"
+        },
+        {
+          "info": {
+            "name": "Bulk add held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId:addHeldAccounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk add held accounts"
+        },
+        {
+          "info": {
+            "name": "Bulk remove held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId:removeHeldAccounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk remove held accounts"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "HeldAccounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List held accounts"
+        },
+        {
+          "info": {
+            "name": "Add held account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add held account"
+        },
+        {
+          "info": {
+            "name": "Remove held account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts/:accountId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove held account"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SavedQueries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List saved queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List saved queries"
+        },
+        {
+          "info": {
+            "name": "Create saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create saved query"
+        },
+        {
+          "info": {
+            "name": "Get saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries/:savedQueryId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "savedQueryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get saved query"
+        },
+        {
+          "info": {
+            "name": "Delete saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries/:savedQueryId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "savedQueryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete saved query"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/operations"
+          },
+          "docs": "List operations"
+        },
+        {
+          "info": {
+            "name": "Get an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an operation"
+        },
+        {
+          "info": {
+            "name": "Delete an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an operation"
+        },
+        {
+          "info": {
+            "name": "Cancel an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId:cancel",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel an operation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
