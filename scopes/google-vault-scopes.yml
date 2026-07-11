@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/google-vault-openapi.yml
+schemes:
+- name: googleOAuth
+  source: openapi/google-vault-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+scopes:
+- scope: https://www.googleapis.com/auth/ediscovery
+  description: Manage all Vault data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/google-vault-openapi.yml
+- scope: https://www.googleapis.com/auth/ediscovery.readonly
+  description: Read-only Vault data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/google-vault-openapi.yml
