@@ -38,6 +38,12 @@ apis:
         url: https://support.google.com/vault
         email: ''
 common:
+  - type: VulnerabilityDisclosure
+    url: security/google-vault-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/google-vault-domain-security.yml
+  - type: Authentication
+    url: authentication/google-vault-authentication.yml
   - type: OAuthScopes
     url: scopes/google-vault-scopes.yml
   - type: GitHubOrganization
