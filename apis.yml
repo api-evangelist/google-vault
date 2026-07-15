@@ -38,6 +38,8 @@ apis:
         url: https://support.google.com/vault
         email: ''
 common:
+  - type: AgenticAccess
+    url: agentic-access/google-vault-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/google-vault-vulnerability-disclosure.yml
   - type: DomainSecurity
