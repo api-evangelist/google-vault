@@ -1,0 +1,188 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: Exports
+paths:
+  /v1/matters/{matterId}/exports:
+    get:
+      tags:
+      - Exports
+      summary: List exports
+      operationId: matters.exports.list
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+      - in: query
+        name: pageToken
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Exports
+    post:
+      tags:
+      - Exports
+      summary: Create export
+      operationId: matters.exports.create
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export'
+      responses:
+        '200':
+          description: Export
+  /v1/matters/{matterId}/exports/{exportId}:
+    get:
+      tags:
+      - Exports
+      summary: Get export
+      operationId: matters.exports.get
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: exportId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Export
+    delete:
+      tags:
+      - Exports
+      summary: Delete export
+      operationId: matters.exports.delete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: exportId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+components:
+  schemas:
+    Query:
+      type: object
+      properties:
+        corpus:
+          type: string
+          enum:
+          - CORPUS_TYPE_UNSPECIFIED
+          - DRIVE
+          - MAIL
+          - GROUPS
+          - HANGOUTS_CHAT
+          - VOICE
+          - CALENDAR
+        dataScope:
+          type: string
+          enum:
+          - DATA_SCOPE_UNSPECIFIED
+          - ALL_DATA
+          - HELD_DATA
+          - UNPROCESSED_DATA
+        searchMethod:
+          type: string
+          enum:
+          - SEARCH_METHOD_UNSPECIFIED
+          - ACCOUNT
+          - ORG_UNIT
+          - TEAM_DRIVE
+          - ENTIRE_ORG
+          - ROOM
+          - SITES_URL
+          - SHARED_DRIVE
+        terms:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        timeZone:
+          type: string
+    Export:
+      type: object
+      properties:
+        id:
+          type: string
+        matterId:
+          type: string
+        name:
+          type: string
+        requester:
+          type: object
+          properties:
+            displayName:
+              type: string
+            email:
+              type: string
+        query:
+          $ref: '#/components/schemas/Query'
+        exportOptions:
+          type: object
+        status:
+          type: string
+          enum:
+          - EXPORT_STATUS_UNSPECIFIED
+          - COMPLETED
+          - FAILED
+          - IN_PROGRESS
+        createTime:
+          type: string
+          format: date-time
+        cloudStorageSink:
+          type: object
+        stats:
+          type: object
+          properties:
+            exportedArtifactCount:
+              type: string
+            totalArtifactCount:
+              type: string
+            sizeInBytes:
+              type: string
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data

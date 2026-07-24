@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports SavedQueries API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: SavedQueries
+paths:
+  /v1/matters/{matterId}/savedQueries:
+    get:
+      tags:
+      - SavedQueries
+      summary: List saved queries
+      operationId: matters.savedQueries.list
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Saved queries
+    post:
+      tags:
+      - SavedQueries
+      summary: Create saved query
+      operationId: matters.savedQueries.create
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SavedQuery'
+      responses:
+        '200':
+          description: SavedQuery
+  /v1/matters/{matterId}/savedQueries/{savedQueryId}:
+    get:
+      tags:
+      - SavedQueries
+      summary: Get saved query
+      operationId: matters.savedQueries.get
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: savedQueryId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SavedQuery
+    delete:
+      tags:
+      - SavedQueries
+      summary: Delete saved query
+      operationId: matters.savedQueries.delete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: savedQueryId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+components:
+  schemas:
+    Query:
+      type: object
+      properties:
+        corpus:
+          type: string
+          enum:
+          - CORPUS_TYPE_UNSPECIFIED
+          - DRIVE
+          - MAIL
+          - GROUPS
+          - HANGOUTS_CHAT
+          - VOICE
+          - CALENDAR
+        dataScope:
+          type: string
+          enum:
+          - DATA_SCOPE_UNSPECIFIED
+          - ALL_DATA
+          - HELD_DATA
+          - UNPROCESSED_DATA
+        searchMethod:
+          type: string
+          enum:
+          - SEARCH_METHOD_UNSPECIFIED
+          - ACCOUNT
+          - ORG_UNIT
+          - TEAM_DRIVE
+          - ENTIRE_ORG
+          - ROOM
+          - SITES_URL
+          - SHARED_DRIVE
+        terms:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        timeZone:
+          type: string
+    SavedQuery:
+      type: object
+      properties:
+        savedQueryId:
+          type: string
+        matterId:
+          type: string
+        displayName:
+          type: string
+        query:
+          $ref: '#/components/schemas/Query'
+        createTime:
+          type: string
+          format: date-time
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data

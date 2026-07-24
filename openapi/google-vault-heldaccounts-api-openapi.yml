@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports HeldAccounts API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: HeldAccounts
+paths:
+  /v1/matters/{matterId}/holds/{holdId}/accounts:
+    get:
+      tags:
+      - HeldAccounts
+      summary: List held accounts
+      operationId: matters.holds.accounts.list
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Accounts
+    post:
+      tags:
+      - HeldAccounts
+      summary: Add held account
+      operationId: matters.holds.accounts.create
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '200':
+          description: HeldAccount
+  /v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}:
+    delete:
+      tags:
+      - HeldAccounts
+      summary: Remove held account
+      operationId: matters.holds.accounts.delete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+components:
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data

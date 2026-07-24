@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports Operations API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: Operations
+paths:
+  /v1/operations:
+    get:
+      tags:
+      - Operations
+      summary: List operations
+      operationId: operations.list
+      responses:
+        '200':
+          description: Operations
+  /v1/operations/{operationsId}:
+    get:
+      tags:
+      - Operations
+      summary: Get an operation
+      operationId: operations.get
+      parameters:
+      - in: path
+        name: operationsId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operation
+    delete:
+      tags:
+      - Operations
+      summary: Delete an operation
+      operationId: operations.delete
+      parameters:
+      - in: path
+        name: operationsId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+  /v1/operations/{operationsId}:cancel:
+    post:
+      tags:
+      - Operations
+      summary: Cancel an operation
+      operationId: operations.cancel
+      parameters:
+      - in: path
+        name: operationsId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+components:
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data

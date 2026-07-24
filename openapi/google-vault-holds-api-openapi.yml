@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports Holds API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: Holds
+paths:
+  /v1/matters/{matterId}/holds:
+    get:
+      tags:
+      - Holds
+      summary: List holds
+      operationId: matters.holds.list
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: view
+        schema:
+          type: string
+          enum:
+          - HOLD_VIEW_UNSPECIFIED
+          - BASIC_HOLD
+          - FULL_HOLD
+      responses:
+        '200':
+          description: Holds
+    post:
+      tags:
+      - Holds
+      summary: Create hold
+      operationId: matters.holds.create
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hold'
+      responses:
+        '200':
+          description: Hold
+  /v1/matters/{matterId}/holds/{holdId}:
+    get:
+      tags:
+      - Holds
+      summary: Get hold
+      operationId: matters.holds.get
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Hold
+    put:
+      tags:
+      - Holds
+      summary: Update hold
+      operationId: matters.holds.update
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hold'
+      responses:
+        '200':
+          description: Hold
+    delete:
+      tags:
+      - Holds
+      summary: Delete hold
+      operationId: matters.holds.delete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+  /v1/matters/{matterId}/holds/{holdId}:addHeldAccounts:
+    post:
+      tags:
+      - Holds
+      summary: Bulk add held accounts
+      operationId: matters.holds.addHeldAccounts
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                accountIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Result
+  /v1/matters/{matterId}/holds/{holdId}:removeHeldAccounts:
+    post:
+      tags:
+      - Holds
+      summary: Bulk remove held accounts
+      operationId: matters.holds.removeHeldAccounts
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: holdId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Result
+components:
+  schemas:
+    Hold:
+      type: object
+      properties:
+        holdId:
+          type: string
+        name:
+          type: string
+        corpus:
+          type: string
+          enum:
+          - CORPUS_TYPE_UNSPECIFIED
+          - DRIVE
+          - MAIL
+          - GROUPS
+          - HANGOUTS_CHAT
+          - VOICE
+          - CALENDAR
+        query:
+          type: object
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              accountId:
+                type: string
+              email:
+                type: string
+        orgUnit:
+          type: object
+          properties:
+            orgUnitId:
+              type: string
+            holdTime:
+              type: string
+              format: date-time
+        updateTime:
+          type: string
+          format: date-time
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data

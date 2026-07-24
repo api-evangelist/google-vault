@@ -1,0 +1,339 @@
+openapi: 3.1.0
+info:
+  title: Google Vault Exports Matters API
+  description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
+  version: v1
+servers:
+- url: https://vault.googleapis.com
+security:
+- googleOAuth: []
+tags:
+- name: Matters
+paths:
+  /v1/matters:
+    get:
+      tags:
+      - Matters
+      summary: List matters
+      operationId: matters.list
+      parameters:
+      - in: query
+        name: state
+        schema:
+          type: string
+          enum:
+          - STATE_UNSPECIFIED
+          - OPEN
+          - CLOSED
+          - DELETED
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+      - in: query
+        name: pageToken
+        schema:
+          type: string
+      - in: query
+        name: view
+        schema:
+          type: string
+          enum:
+          - VIEW_UNSPECIFIED
+          - BASIC
+          - FULL
+      responses:
+        '200':
+          description: Matters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Matter'
+                  nextPageToken:
+                    type: string
+    post:
+      tags:
+      - Matters
+      summary: Create matter
+      operationId: matters.create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Matter'
+      responses:
+        '200':
+          description: Matter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Matter'
+  /v1/matters/{matterId}:
+    get:
+      tags:
+      - Matters
+      summary: Get matter
+      operationId: matters.get
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matter
+    put:
+      tags:
+      - Matters
+      summary: Update matter
+      operationId: matters.update
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Matter'
+      responses:
+        '200':
+          description: Matter
+    delete:
+      tags:
+      - Matters
+      summary: Delete matter
+      operationId: matters.delete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Empty
+  /v1/matters/{matterId}:close:
+    post:
+      tags:
+      - Matters
+      summary: Close a matter
+      operationId: matters.close
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Closed
+  /v1/matters/{matterId}:reopen:
+    post:
+      tags:
+      - Matters
+      summary: Reopen a matter
+      operationId: matters.reopen
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Reopened
+  /v1/matters/{matterId}:undelete:
+    post:
+      tags:
+      - Matters
+      summary: Undelete a matter
+      operationId: matters.undelete
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Undeleted
+  /v1/matters/{matterId}:count:
+    post:
+      tags:
+      - Matters
+      summary: Count accounts processed by a query
+      operationId: matters.count
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  $ref: '#/components/schemas/Query'
+                view:
+                  type: string
+                  enum:
+                  - COUNT_RESULT_VIEW_UNSPECIFIED
+                  - TOTAL_COUNT
+                  - ALL
+      responses:
+        '200':
+          description: Operation
+  /v1/matters/{matterId}:addPermissions:
+    post:
+      tags:
+      - Matters
+      summary: Add collaborator to matter
+      operationId: matters.addPermissions
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matterPermission:
+                  type: object
+                  properties:
+                    role:
+                      type: string
+                      enum:
+                      - ROLE_UNSPECIFIED
+                      - COLLABORATOR
+                      - OWNER
+                    accountId:
+                      type: string
+                sendEmails:
+                  type: boolean
+                ccMe:
+                  type: boolean
+      responses:
+        '200':
+          description: MatterPermission
+  /v1/matters/{matterId}:removePermissions:
+    post:
+      tags:
+      - Matters
+      summary: Remove collaborator from matter
+      operationId: matters.removePermissions
+      parameters:
+      - in: path
+        name: matterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+      responses:
+        '200':
+          description: Empty
+components:
+  schemas:
+    Query:
+      type: object
+      properties:
+        corpus:
+          type: string
+          enum:
+          - CORPUS_TYPE_UNSPECIFIED
+          - DRIVE
+          - MAIL
+          - GROUPS
+          - HANGOUTS_CHAT
+          - VOICE
+          - CALENDAR
+        dataScope:
+          type: string
+          enum:
+          - DATA_SCOPE_UNSPECIFIED
+          - ALL_DATA
+          - HELD_DATA
+          - UNPROCESSED_DATA
+        searchMethod:
+          type: string
+          enum:
+          - SEARCH_METHOD_UNSPECIFIED
+          - ACCOUNT
+          - ORG_UNIT
+          - TEAM_DRIVE
+          - ENTIRE_ORG
+          - ROOM
+          - SITES_URL
+          - SHARED_DRIVE
+        terms:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        timeZone:
+          type: string
+    Matter:
+      type: object
+      properties:
+        matterId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+          enum:
+          - STATE_UNSPECIFIED
+          - OPEN
+          - CLOSED
+          - DELETED
+        matterPermissions:
+          type: array
+          items:
+            type: object
+            properties:
+              role:
+                type: string
+              accountId:
+                type: string
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/ediscovery: Manage all Vault data
+            https://www.googleapis.com/auth/ediscovery.readonly: Read-only Vault data
