@@ -3,6 +3,19 @@ name: Google Vault
 description: >-
   A collection of APIs for Google Vault, an information governance and eDiscovery
   tool for Google Workspace.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
 url: https://developers.google.com/vault
 created: '2025-01-01'
@@ -10,33 +23,114 @@ modified: '2026-04-28'
 specificationVersion: '0.19'
 type: Index
 apis:
-  - name: Google Vault API
-    description: The Google Vault API allows developers to manage matters, holds, searches, and exports for Google Vault. It enables programmatic access to eDiscovery and information governance capabilities for Google Workspace data.
-    image: https://www.gstatic.com/images/branding/product/2x/vault_48dp.png
-    humanURL: https://developers.google.com/vault
-    baseURL: https://vault.googleapis.com
-    tags:
-      - Compliance
-      - Data Retention
-      - eDiscovery
-      - Google Workspace
-      - Information Governance
-      - Legal Hold
-    properties:
-      - type: Documentation
-        url: https://developers.google.com/vault/reference/rest
-      - type: OpenAPI
-        url: https://vault.googleapis.com/$discovery/rest?version=v1
-      - type: Authentication
-        url: https://developers.google.com/vault/reference/rest/v1/auth
-      - type: Pricing
-        url: https://workspace.google.com/pricing.html
-      - type: TermsOfService
-        url: https://developers.google.com/terms
-    contact:
-      - FN: Google Workspace Support
-        url: https://support.google.com/vault
-        email: ''
+- aid: google-vault:google-vault-exports-api
+  name: Google Vault Exports API
+  description: The Exports API from Google Vault — 2 operation(s) for exports.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-exports-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+- aid: google-vault:google-vault-heldaccounts-api
+  name: Google Vault HeldAccounts API
+  description: The HeldAccounts API from Google Vault — 2 operation(s) for heldaccounts.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - HeldAccounts
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-heldaccounts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+- aid: google-vault:google-vault-holds-api
+  name: Google Vault Holds API
+  description: The Holds API from Google Vault — 4 operation(s) for holds.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - Holds
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-holds-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+- aid: google-vault:google-vault-matters-api
+  name: Google Vault Matters API
+  description: The Matters API from Google Vault — 8 operation(s) for matters.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - Matters
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-matters-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+- aid: google-vault:google-vault-operations-api
+  name: Google Vault Operations API
+  description: The Operations API from Google Vault — 3 operation(s) for operations.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-operations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+- aid: google-vault:google-vault-savedqueries-api
+  name: Google Vault SavedQueries API
+  description: The SavedQueries API from Google Vault — 2 operation(s) for savedqueries.
+  humanURL: https://developers.google.com/vault
+  baseURL: https://vault.googleapis.com
+  tags:
+  - SavedQueries
+  properties:
+  - type: OpenAPI
+    url: openapi/google-vault-savedqueries-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/vault/reference/rest
+  - type: Authentication
+    url: https://developers.google.com/vault/reference/rest/v1/auth
+  - type: Pricing
+    url: https://workspace.google.com/pricing.html
+  - type: TermsOfService
+    url: https://developers.google.com/terms
 common:
   - type: AgenticAccess
     url: agentic-access/google-vault-agentic-access.yml
