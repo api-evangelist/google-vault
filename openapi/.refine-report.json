@@ -1,0 +1,24 @@
+{
+  "provider": "google-vault",
+  "sources": [
+    "google-vault-exports-api-openapi.yml",
+    "google-vault-heldaccounts-api-openapi.yml",
+    "google-vault-holds-api-openapi.yml",
+    "google-vault-matters-api-openapi.yml",
+    "google-vault-operations-api-openapi.yml",
+    "google-vault-savedqueries-api-openapi.yml"
+  ],
+  "outputs": [
+    "google-vault-exports-api-openapi.yml",
+    "google-vault-heldaccounts-api-openapi.yml",
+    "google-vault-holds-api-openapi.yml",
+    "google-vault-matters-api-openapi.yml",
+    "google-vault-operations-api-openapi.yml",
+    "google-vault-savedqueries-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
