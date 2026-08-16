@@ -6,7 +6,8 @@
       "feed_url": "https://workspace.google.com/blog/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     },
     {
       "source": "https://developers.google.com/feeds/vault-release-notes.xml",
@@ -24,5 +25,5 @@
     }
   ],
   "post_count": 4,
-  "fetched": "2026-08-06T14:08:46Z"
+  "fetched": "2026-08-15T12:11:08Z"
 }
