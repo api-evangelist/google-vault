@@ -1,0 +1,256 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault Exports Matters API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Matters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List matters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List matters"
+        },
+        {
+          "info": {
+            "name": "Create matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create matter"
+        },
+        {
+          "info": {
+            "name": "Get matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get matter"
+        },
+        {
+          "info": {
+            "name": "Update matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update matter"
+        },
+        {
+          "info": {
+            "name": "Delete matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete matter"
+        },
+        {
+          "info": {
+            "name": "Close a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:close",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Close a matter"
+        },
+        {
+          "info": {
+            "name": "Reopen a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:reopen",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reopen a matter"
+        },
+        {
+          "info": {
+            "name": "Undelete a matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:undelete",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Undelete a matter"
+        },
+        {
+          "info": {
+            "name": "Count accounts processed by a query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:count",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Count accounts processed by a query"
+        },
+        {
+          "info": {
+            "name": "Add collaborator to matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:addPermissions",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add collaborator to matter"
+        },
+        {
+          "info": {
+            "name": "Remove collaborator from matter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId:removePermissions",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove collaborator from matter"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

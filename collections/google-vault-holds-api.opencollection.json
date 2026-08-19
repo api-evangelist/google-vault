@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault Exports Holds API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Holds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List holds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List holds"
+        },
+        {
+          "info": {
+            "name": "Create hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create hold"
+        },
+        {
+          "info": {
+            "name": "Get hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get hold"
+        },
+        {
+          "info": {
+            "name": "Update hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update hold"
+        },
+        {
+          "info": {
+            "name": "Delete hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete hold"
+        },
+        {
+          "info": {
+            "name": "Bulk add held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId:addHeldAccounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk add held accounts"
+        },
+        {
+          "info": {
+            "name": "Bulk remove held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId:removeHeldAccounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk remove held accounts"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

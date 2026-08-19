@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault Exports SavedQueries API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SavedQueries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List saved queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List saved queries"
+        },
+        {
+          "info": {
+            "name": "Create saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create saved query"
+        },
+        {
+          "info": {
+            "name": "Get saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries/:savedQueryId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "savedQueryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get saved query"
+        },
+        {
+          "info": {
+            "name": "Delete saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/savedQueries/:savedQueryId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "savedQueryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete saved query"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

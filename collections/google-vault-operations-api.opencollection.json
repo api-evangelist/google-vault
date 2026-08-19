@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault Exports Operations API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/operations"
+          },
+          "docs": "List operations"
+        },
+        {
+          "info": {
+            "name": "Get an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an operation"
+        },
+        {
+          "info": {
+            "name": "Delete an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an operation"
+        },
+        {
+          "info": {
+            "name": "Cancel an operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/operations/:operationsId:cancel",
+            "params": [
+              {
+                "name": "operationsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel an operation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

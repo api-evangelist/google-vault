@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Vault Exports HeldAccounts API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "HeldAccounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List held accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List held accounts"
+        },
+        {
+          "info": {
+            "name": "Add held account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add held account"
+        },
+        {
+          "info": {
+            "name": "Remove held account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.googleapis.com/v1/matters/:matterId/holds/:holdId/accounts/:accountId",
+            "params": [
+              {
+                "name": "matterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "holdId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove held account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
