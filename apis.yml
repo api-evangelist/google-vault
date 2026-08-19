@@ -20,7 +20,7 @@ image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272
 url: https://developers.google.com/vault
 created: '2025-01-01'
 modified: '2026-04-28'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 type: Index
 apis:
 - aid: google-vault:google-vault-exports-api
