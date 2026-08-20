@@ -29,6 +29,8 @@ apis:
   humanURL: https://developers.google.com/vault
   baseURL: https://vault.googleapis.com
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -100,7 +102,8 @@ apis:
   description: The Operations API from Google Vault — 3 operation(s) for operations.
   humanURL: https://developers.google.com/vault
   baseURL: https://vault.googleapis.com
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -119,6 +122,8 @@ apis:
   humanURL: https://developers.google.com/vault
   baseURL: https://vault.googleapis.com
   tags:
+  - Saved Queries
+  tags_raw:
   - SavedQueries
   properties:
   - type: OpenAPI
