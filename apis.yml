@@ -134,7 +134,7 @@ apis:
   humanURL: https://developers.google.com/vault
   baseURL: https://vault.googleapis.com
   tags:
-  - SavedQueries
+  - Saved Queries
   tags_raw:
   - SavedQueries
   properties:
