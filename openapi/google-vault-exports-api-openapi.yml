@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Google Vault Exports API
   description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
@@ -94,47 +94,6 @@ paths:
           description: Empty
 components:
   schemas:
-    Query:
-      type: object
-      properties:
-        corpus:
-          type: string
-          enum:
-          - CORPUS_TYPE_UNSPECIFIED
-          - DRIVE
-          - MAIL
-          - GROUPS
-          - HANGOUTS_CHAT
-          - VOICE
-          - CALENDAR
-        dataScope:
-          type: string
-          enum:
-          - DATA_SCOPE_UNSPECIFIED
-          - ALL_DATA
-          - HELD_DATA
-          - UNPROCESSED_DATA
-        searchMethod:
-          type: string
-          enum:
-          - SEARCH_METHOD_UNSPECIFIED
-          - ACCOUNT
-          - ORG_UNIT
-          - TEAM_DRIVE
-          - ENTIRE_ORG
-          - ROOM
-          - SITES_URL
-          - SHARED_DRIVE
-        terms:
-          type: string
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        timeZone:
-          type: string
     Export:
       type: object
       properties:
@@ -176,6 +135,47 @@ components:
               type: string
             sizeInBytes:
               type: string
+    Query:
+      type: object
+      properties:
+        corpus:
+          type: string
+          enum:
+          - CORPUS_TYPE_UNSPECIFIED
+          - DRIVE
+          - MAIL
+          - GROUPS
+          - HANGOUTS_CHAT
+          - VOICE
+          - CALENDAR
+        dataScope:
+          type: string
+          enum:
+          - DATA_SCOPE_UNSPECIFIED
+          - ALL_DATA
+          - HELD_DATA
+          - UNPROCESSED_DATA
+        searchMethod:
+          type: string
+          enum:
+          - SEARCH_METHOD_UNSPECIFIED
+          - ACCOUNT
+          - ORG_UNIT
+          - TEAM_DRIVE
+          - ENTIRE_ORG
+          - ROOM
+          - SITES_URL
+          - SHARED_DRIVE
+        terms:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        timeZone:
+          type: string
   securitySchemes:
     googleOAuth:
       type: oauth2

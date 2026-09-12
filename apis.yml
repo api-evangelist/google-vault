@@ -149,6 +149,8 @@ apis:
   - type: TermsOfService
     url: https://developers.google.com/terms
 common:
+  - type: Website
+    url: https://www.google.com/
   - type: AgenticAccess
     url: agentic-access/google-vault-agentic-access.yml
   - type: VulnerabilityDisclosure
@@ -176,3 +178,5 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-parent: google
+x-relationship: product
