@@ -1,0 +1,104 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Google Vault matters-api
+  version: 1.0.0
+extends: ../openapi/google-vault-matters-api-openapi.yml
+x-generated: '2026-09-12'
+x-method: derived
+x-source: discovery/google-vault-discovery-v1.json + repo artifacts
+x-note: Non-destructive overlay. Adds Google Discovery method descriptions, per-method required scopes,
+  reversal/irreversibility markers and pointers to the derived artifacts in this repo. The underlying
+  OpenAPI is never mutated.
+actions:
+- target: $.info
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/google-vault
+    x-contract-source: https://vault.googleapis.com/$discovery/rest?version=v1
+    x-contract-revision: '20260905'
+    x-idempotency: none — no Idempotency-Key or client request id on any mutating method
+    x-error-envelope: google.rpc.Status (AIP-193), not RFC 9457 problem+json
+    x-rate-limit-headers: none published; HTTP 429 is the only runtime signal
+- target: $
+  update:
+    x-artifacts:
+      authentication: authentication/google-vault-authentication.yml
+      scopes: scopes/google-vault-scopes.yml
+      conventions: conventions/google-vault-conventions.yml
+      errors: errors/google-vault-problem-types.yml
+      rate-limits: rate-limits/google-vault-rate-limits.yml
+      data-model: data-model/google-vault-data-model.yml
+      lifecycle: lifecycle/google-vault-lifecycle.yml
+- target: $.paths["/v1/matters"].get
+  update:
+    x-google-description: Lists matters the requestor has access to.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.matters.list
+- target: $.paths["/v1/matters"].post
+  update:
+    x-google-description: Creates a matter with the given name and description. The initial state is open,
+      and the owner is the method caller. Returns the created matter with default view.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.create
+- target: $.paths["/v1/matters/{matterId}"].get
+  update:
+    x-google-description: Gets the specified matter.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.matters.get
+- target: $.paths["/v1/matters/{matterId}"].put
+  update:
+    x-google-description: Updates the specified matter. This updates only the name and description of
+      the matter, identified by matter ID. Changes to any other fields are ignored. Returns the default
+      view of the matter.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.update
+- target: $.paths["/v1/matters/{matterId}"].delete
+  update:
+    x-google-description: Deletes the specified matter. Returns the matter with updated state.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.delete
+    x-reversal-operation: matters.undelete
+- target: $.paths["/v1/matters/{matterId}:close"].post
+  update:
+    x-google-description: Closes the specified matter. Returns the matter with updated state.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.close
+    x-reversal-operation: matters.reopen
+- target: $.paths["/v1/matters/{matterId}:reopen"].post
+  update:
+    x-google-description: Reopens the specified matter. Returns the matter with updated state.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.reopen
+- target: $.paths["/v1/matters/{matterId}:undelete"].post
+  update:
+    x-google-description: Undeletes the specified matter. Returns the matter with updated state.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.undelete
+- target: $.paths["/v1/matters/{matterId}:count"].post
+  update:
+    x-google-description: Counts the accounts processed by the specified query.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.count
+- target: $.paths["/v1/matters/{matterId}:addPermissions"].post
+  update:
+    x-google-description: Adds an account as a matter collaborator.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.addPermissions
+    x-reversal-operation: matters.removePermissions
+- target: $.paths["/v1/matters/{matterId}:removePermissions"].post
+  update:
+    x-google-description: Removes an account as a matter collaborator.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.removePermissions

@@ -1,18 +1,90 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/google-vault-openapi.yml
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/vault/auth
+docs: https://developers.google.com/workspace/vault/auth
+references:
+  - https://developers.google.com/workspace/vault/auth
+  - https://developers.google.com/workspace/guides/auth-overview
+  - https://developers.google.com/identity/protocols/oauth2
+  - https://developers.google.com/workspace/vault/troubleshoot-authentication-authorization
+  - well-known/google-vault-openid-configuration.json
 summary:
-  types:
-  - oauth2
-  oauth2_flows:
-  - authorizationCode
+  types: [oauth2]
+  oauth2_flows: [authorizationCode]
+  api_key_supported: false
+  anonymous_access: false
+  scopes: 2
+description: >-
+  Every Vault API method requires an OAuth 2.0 access token; there is no API-key or
+  unauthenticated path. Vault is an admin surface, so the token must belong to a Google
+  Workspace user who holds Vault privileges (or to a service account with domain-wide
+  delegation impersonating one). The authorization server is accounts.google.com, whose OIDC
+  and RFC 8414 metadata are saved verbatim under well-known/.
 schemes:
-- name: googleOAuth
-  type: oauth2
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
-    tokenUrl: https://oauth2.googleapis.com/token
-    scopes: 2
-  sources:
-  - openapi/google-vault-openapi.yml
+  - name: googleOAuth
+    type: oauth2
+    in: header
+    header: 'Authorization: Bearer <access token>'
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+        tokenUrl: https://oauth2.googleapis.com/token
+        scopes: 2
+    sources:
+      - openapi/google-vault-matters-api-openapi.yml
+      - discovery/google-vault-discovery-v1.json
+credential_types:
+  - kind: oauth-user
+    name: OAuth 2.0 client (installed / web app)
+    consent: https://developers.google.com/workspace/guides/configure-oauth-consent
+    note: >-
+      The Java and Python quickstarts both use a downloaded OAuth client
+      (credentials.json) and an interactive consent step.
+  - kind: service-account-dwd
+    name: Service account with domain-wide delegation
+    note: >-
+      Server-to-server access impersonates a Workspace user who has Vault privileges. A raw
+      service account identity with no impersonation has no Vault data of its own.
+    docs: https://developers.google.com/workspace/guides/create-credentials
+  - kind: api-key
+    supported: false
+    note: >-
+      Vault carries only user data, so the api key path Google offers for public data APIs
+      does not apply. The Discovery document's global `key` parameter exists on every Google
+      API but does not satisfy the method's scopes[] requirement.
+authorization:
+  model: >-
+    OAuth scope AND Google Workspace Vault privilege. Holding the ediscovery scope is not
+    sufficient — the acting user must also be granted the relevant Vault privileges in the
+    Admin console, and matters are further gated per-matter by MatterPermission.
+  scopes_detail: scopes/google-vault-scopes.yml
+  per_matter: >-
+    matters.addPermissions / matters.removePermissions manage collaborator access on a single
+    matter via the MatterPermission resource, so visibility is scoped per matter and not only
+    per user.
+failure_modes:
+  - status: 401
+    meaning: The access token is invalid or expired.
+    remedy: Refresh the token and retry.
+    source: https://developers.google.com/workspace/vault/guides/errors
+  - status: 404
+    meaning: >-
+      The specified resource was not found — returned when the request names a matter, hold or
+      account that does not exist. Verbatim from the provider's error guide; the guide does not
+      document a 403, so permission failures are not separately described there.
+    source: https://developers.google.com/workspace/vault/guides/errors
+consent_and_setup_failures:
+  source: https://developers.google.com/workspace/vault/troubleshoot-authentication-authorization
+  documented:
+    - symptom: This app isn't verified
+      cause: The app requests scopes over sensitive user data and has not completed verification.
+    - symptom: File not found error for credentials.json
+      cause: Desktop-application credentials were never created or are not in the working directory.
+    - symptom: Token has been expired or revoked
+      cause: The access/refresh token from Google's authorization server is no longer valid.
+    - symptom: 'JavaScript: origin_mismatch / idpiframe_initialization_failed'
+      cause: Authorized JavaScript origin mismatch, or third-party cookies disabled for accounts.google.com.
+authorization_server:
+  issuer: https://accounts.google.com
+  openid_configuration: well-known/google-vault-openid-configuration.json
+  oauth_authorization_server: well-known/google-vault-oauth-authorization-server.json

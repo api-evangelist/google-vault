@@ -1,0 +1,90 @@
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/vault/guides/errors
+references:
+  - https://developers.google.com/workspace/vault/guides/errors
+  - https://developers.google.com/workspace/vault/limits
+  - https://google.aip.dev/193
+format: google-rpc-status
+rfc9457: false
+rfc9457_note: >-
+  Vault does not use application/problem+json. Errors come back in the Google API error
+  envelope described by AIP-193 — a single top-level `error` object carrying `code`
+  (the HTTP status), `message`, `status` (the canonical google.rpc.Code name) and an
+  optional `details` array. Any agent written against RFC 9457 needs a Google-specific
+  adapter for this surface.
+envelope:
+  media_type: application/json
+  root: error
+  fields:
+    code: HTTP status code, repeated inside the body.
+    message: Human-readable description; language follows the request's Accept-Language.
+    status: Canonical error name (INVALID_ARGUMENT, UNAUTHENTICATED, NOT_FOUND, ALREADY_EXISTS, RESOURCE_EXHAUSTED, INTERNAL).
+    details: Optional array of typed detail messages (google.rpc.ErrorInfo and friends).
+  note: >-
+    The envelope shape is Google-platform-wide (AIP-193); the status codes below are the ones
+    the Vault error guide itself enumerates.
+problem_types:
+  - status: 400
+    canonical: INVALID_ARGUMENT
+    title: Bad request
+    detail: >-
+      "This error code is returned when there is an error in the input request." Includes
+      malformed matter/hold/export bodies and unsupported query combinations.
+    remediation: Correct the request parameters and resubmit.
+    retryable: false
+  - status: 401
+    canonical: UNAUTHENTICATED
+    title: Invalid credentials
+    detail: The access token is invalid or expired.
+    remediation: Obtain a fresh access token before retrying.
+    retryable: false
+    see_also: authentication/google-vault-authentication.yml
+  - status: 404
+    canonical: NOT_FOUND
+    title: Resource not found
+    detail: >-
+      The specified resource was not found — returned when the request has a matter, hold, or
+      account that doesn't exist.
+    remediation: Verify the matterId / holdId / accountId; list the parent to confirm.
+    retryable: false
+  - status: 409
+    canonical: ALREADY_EXISTS
+    title: Resource already exists
+    detail: The specified resource already exists.
+    remediation: Retrieve the resource and update it if necessary.
+    retryable: false
+    agent_note: >-
+      With no idempotency key on this API, 409 is the main signal an agent has to use to tell
+      "my retry already succeeded" apart from "a genuine duplicate". See the idempotency block
+      in conventions/google-vault-conventions.yml.
+  - status: 429
+    canonical: RESOURCE_EXHAUSTED
+    title: Too many requests
+    detail: The request exceeds a Vault API quota.
+    remediation: >-
+      Review the published per-minute quotas and retry with truncated exponential backoff —
+      min(((2^n)+random_number_milliseconds), maximum_backoff), maximum_backoff typically
+      32 or 64 seconds.
+    retryable: true
+    see_also: rate-limits/google-vault-rate-limits.yml
+  - status: 500
+    canonical: INTERNAL
+    title: Internal error
+    detail: An unexpected error happened while processing the request.
+    remediation: Retry using exponential backoff.
+    retryable: true
+long_running_operations:
+  note: >-
+    vault.matters.count is the one method whose declared response is an Operation
+    (discovery/google-vault-discovery-v1.json). A failure inside that long-running operation
+    surfaces in the Operation's own `error` field — a google.rpc.Status — rather than as an
+    HTTP error on the originating call, so an agent that checks only the HTTP status of
+    matters.count will miss the failure. Exports are asynchronous in a different way:
+    vault.matters.exports.create returns an Export immediately and the caller polls
+    vault.matters.exports.get until Export.status leaves IN_PROGRESS.
+  poll: [vault.operations.get, vault.matters.exports.get]
+summary:
+  documented_statuses: 6
+  retryable: 2
+  error_catalog_published_by_provider: true

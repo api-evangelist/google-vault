@@ -1,0 +1,184 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/vault/reference/rest,
+  https://developers.google.com/workspace/vault/limits,
+  https://developers.google.com/workspace/vault/guides/errors,
+  https://google.aip.dev/193 and discovery/google-vault-discovery-v1.json
+description: >-
+  Cross-cutting request/response semantics for the Google Vault API v1 — how an agent or SDK
+  authenticates, pages, retries, reads errors, and (where it can) undoes work on this surface.
+authentication:
+  style: oauth2-bearer
+  scheme: 'Authorization: Bearer <OAuth 2.0 access token>'
+  flows: [authorizationCode, service-account with domain-wide delegation]
+  scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+  api_key: not supported
+  docs: https://developers.google.com/workspace/vault/auth
+  detail: authentication/google-vault-authentication.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  retention: null
+  summary: >-
+    Google publishes no Idempotency-Key header, no client-supplied request id and no
+    de-duplication token anywhere on the Vault API. None of the 22 mutating methods in the
+    Discovery document (revision 20260905) accepts a replay token, and the error guide
+    documents no "duplicate request" semantics. A retry after an ambiguous timeout on
+    matters.create, holds.create, savedQueries.create or exports.create can therefore create a
+    second object. The only handle an agent has is the 409 ALREADY_EXISTS the error guide
+    documents, which fires where the resource is uniquely named, plus a defensive list-then-
+    create pattern; neither is idempotency and neither is guaranteed.
+  agent_guidance: >-
+    Before retrying a create, list the parent collection and match on displayName / name to
+    decide whether the first attempt landed. Treat exports.create as the highest-risk retry —
+    an accidental duplicate export consumes one of the 20 organization-wide concurrent export
+    slots.
+  docs: https://developers.google.com/workspace/vault/guides/errors
+reversibility:
+  grade: verified
+  summary: >-
+    Vault is an information-governance product, so reversal is unusually well specified for
+    the matter lifecycle and unusually absent everywhere else. Deleting a matter is soft and
+    reversible; deleting a hold, a held account, a saved query or an export is not.
+  operations:
+    - write: vault.matters.delete
+      reversal: vault.matters.undelete
+      window: >-
+        Approximately 30 days. Verbatim from the provider's own developer guide: "A deleted
+        matter remains in Trash for approximately 30 days, during which time it can be
+        restored. After that period, the matter is permanently purged."
+      window_source: https://developers.google.com/workspace/vault/guides/matters
+      confidence: high
+      precondition: >-
+        "Only closed matters can be deleted" — an agent must call matters.close before
+        matters.delete, which makes the destructive path two deliberate steps rather than one.
+      note: >-
+        Deletion is soft: it moves the matter to state DELETED (the Discovery document's Matter
+        state enum is STATE_UNSPECIFIED / OPEN / CLOSED / DELETED) rather than removing it.
+    - write: vault.matters.close
+      reversal: vault.matters.reopen
+      window: none stated — a closed matter can be reopened at any time
+      confidence: high
+      note: >-
+        Both directions are first-class methods (CloseMatterRequest / ReopenMatterRequest), so
+        closing is fully reversible with no expiry.
+    - write: vault.matters.addPermissions
+      reversal: vault.matters.removePermissions
+      window: none stated — immediate and symmetric
+      confidence: high
+    - write: vault.matters.holds.addHeldAccounts
+      reversal: vault.matters.holds.removeHeldAccounts
+      window: none stated — immediate and symmetric
+      confidence: high
+      note: >-
+        Removing an account from a hold does not restore data the hold was preserving; it stops
+        preserving it going forward.
+    - write: vault.matters.holds.accounts.create
+      reversal: vault.matters.holds.accounts.delete
+      window: none stated
+      confidence: high
+    - write: vault.matters.exports.create
+      reversal: vault.matters.exports.delete
+      window: none stated
+      confidence: high
+      note: >-
+        Deleting an export removes the export job and its results. It cancels the artifact, it
+        does not roll back the export's effects, and it cannot be undone.
+  irreversible:
+    - vault.matters.holds.delete
+    - vault.matters.holds.accounts.delete
+    - vault.matters.savedQueries.delete
+    - vault.matters.exports.delete
+    - vault.operations.delete
+  irreversible_note: >-
+    These have no restore method anywhere in the 33-method surface. Deleting a hold is the one
+    an agent should treat as destructive in the legal sense: while a hold exists it overrides
+    normal retention, and once it is gone the data it was preserving becomes subject to
+    deletion again. Google publishes no undelete for holds.
+dry_run_mode:
+  supported: false
+  nearest_equivalent: vault.matters.count
+  note: >-
+    There is no preview/validate-only flag on any method. matters.count is the closest thing
+    to a rehearsal: it runs a search query and returns counts (as a long-running Operation)
+    without creating a hold or an export, so an agent can size a query before committing to
+    exports.create.
+pagination:
+  style: cursor
+  request_params:
+    page_size: pageSize
+    page_token: pageToken
+  response_fields:
+    next_token: nextPageToken
+  applies_to:
+    - vault.matters.list
+    - vault.matters.holds.list
+    - vault.matters.holds.accounts.list
+    - vault.matters.savedQueries.list
+    - vault.matters.exports.list
+    - vault.operations.list
+  note: >-
+    vault.matters.holds.accounts.list is the exception — it returns the full HeldAccount set
+    for a hold with no paging parameters in the Discovery document.
+views:
+  param: view
+  values: [VIEW_UNSPECIFIED, BASIC, FULL]
+  applies_to: [vault.matters.list, vault.matters.get, vault.matters.holds.list, vault.matters.holds.get]
+  note: >-
+    A view enum, not a sparse-fieldset syntax. BASIC omits the expensive sub-resources
+    (matterPermissions, hold accounts); FULL includes them.
+field_selection:
+  param: fields
+  style: google-partial-response
+  note: >-
+    The platform-wide `fields` parameter (a partial-response selector, listed in the Discovery
+    document's global parameters) works on every method. It is not Vault-specific and is not
+    documented on the Vault pages.
+versioning:
+  scheme: uri-path
+  current: v1
+  revision: '20260905'
+  revision_source: discovery/google-vault-discovery-v1.json
+  note: >-
+    One stable major version since launch. Additive change is dated through the Discovery
+    document's `revision` field rather than a new path segment.
+errors:
+  envelope: google-rpc-status
+  media_type: application/json
+  root_field: error
+  rfc9457: false
+  detail: errors/google-vault-problem-types.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers: none published
+  headers_note: >-
+    Google documents no X-RateLimit-* or RateLimit-* response headers for Vault and no
+    Retry-After. The published quotas are per-minute per-project and are only discoverable in
+    the docs and in Google Cloud console quota pages — an agent cannot read its remaining
+    budget off a response. This is the sharpest agent-readiness gap on the surface.
+  retry: truncated exponential backoff, maximum_backoff typically 32 or 64 seconds
+  detail: rate-limits/google-vault-rate-limits.yml
+request_tracing:
+  request_id_header: none published
+  note: >-
+    No x-request-id / x-goog-request-id is documented for Vault. Support escalation is by
+    project number and timestamp.
+long_running:
+  pattern: google-lro
+  resource: vault.operations
+  methods: [vault.operations.get, vault.operations.list, vault.operations.cancel, vault.operations.delete]
+  returns_operation: [vault.matters.count]
+  polling: >-
+    Poll vault.operations.get until done is true, then read either response or error. Exports
+    use a different asynchronous shape: poll vault.matters.exports.get until
+    Export.status leaves IN_PROGRESS (COMPLETED or FAILED).
+data_residency:
+  field: Matter.matterRegion
+  note: >-
+    A matter can be pinned to a data region. It is a property of the matter, set at creation,
+    and it is the only residency control on this API.

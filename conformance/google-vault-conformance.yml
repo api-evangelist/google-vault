@@ -1,0 +1,136 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  discovery/google-vault-discovery-v1.json, the live documents saved under well-known/,
+  https://google.aip.dev/193, https://workspace.google.com/security/ and
+  https://cloud.google.com/security/compliance/offerings
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Every one of the 33 methods in the Discovery document (revision 20260905) declares
+      scopes[] under auth.oauth2, and the OpenAPI securityScheme is oauth2/authorizationCode
+      against accounts.google.com. No method offers a non-OAuth path.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      https://accounts.google.com/.well-known/openid-configuration returned HTTP 200 on
+      2026-09-12; saved verbatim at well-known/google-vault-openid-configuration.json. This is
+      the issuer behind the Vault API's authorizationUrl.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: >-
+      https://accounts.google.com/.well-known/oauth-authorization-server returned HTTP 200 on
+      2026-09-12; saved at well-known/google-vault-oauth-authorization-server.json.
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: >-
+      https://www.google.com/.well-known/security.txt returned HTTP 200 on 2026-09-12 with
+      Contact, Encryption, Acknowledgments, Policy, Hiring and Expires (2030-04-01).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use the Google API error envelope (google.rpc.Status — error.code /
+      error.message / error.status / error.details) per AIP-193, not application/problem+json.
+      See errors/google-vault-problem-types.yml.
+  - id: google-discovery-document
+    conforms: true
+    evidence: >-
+      https://vault.googleapis.com/$discovery/rest?version=v1 returns a Google API Discovery
+      Document (id vault:v1, revision 20260905, 71 schemas, 33 methods), saved verbatim at
+      discovery/google-vault-discovery-v1.json.
+  - id: aip-193-error-model
+    conforms: true
+    evidence: >-
+      The published error guide enumerates 400/401/404/409/429/500 mapped onto the canonical
+      google.rpc.Code names, which is the AIP-193 model.
+  - id: aip-158-pagination
+    conforms: true
+    evidence: >-
+      pageSize / pageToken request parameters and nextPageToken response field on
+      matters.list, holds.list, savedQueries.list, exports.list and operations.list.
+  - id: aip-151-long-running-operations
+    conforms: true
+    evidence: >-
+      A vault.operations resource with get/list/cancel/delete, and matters.count declaring an
+      Operation response, in the Discovery document.
+  - id: idempotency-keys
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header, client request id, or de-duplication token on any of the 22
+      mutating methods. See conventions/google-vault-conventions.yml (idempotency.coverage: none).
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response header is documented; the deprecation commitment lives
+      in the Workspace Terms of Service rather than in the protocol.
+  - id: model-context-protocol
+    conforms: false
+    evidence: >-
+      Google ships official remote MCP servers for eight Workspace products
+      (https://developers.google.com/workspace/guides/configure-mcp-servers) and Vault is not
+      among them. A POST of tools/list to the host that would match Google's own naming
+      pattern returned HTTP 404 on 2026-09-12, while the same request to the documented
+      gmailmcp.googleapis.com endpoint returned HTTP 200 — a controlled negative.
+  - id: a2a-agent-card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json returned 404 (or, on
+      workspace.google.com, 302) on all eight hosts probed on 2026-09-12. See
+      well-known/google-vault-well-known.yml.
+  - id: grpc
+    conforms: false
+    evidence: >-
+      No Vault service definition exists in the googleapis protobuf repository —
+      raw.githubusercontent.com/googleapis/googleapis/master/google/apps/vault/v1/vault.proto
+      returned 404 on 2026-09-12. Unlike Google Cloud APIs, Vault is a Workspace API published
+      only as a Discovery document plus REST; there is no gRPC surface to describe.
+  - id: soap-wsdl
+    conforms: false
+    evidence: >-
+      No SOAP surface. Nothing under vault.googleapis.com answers ?wsdl, and Google publishes
+      no enterprise SOAP contract for any Workspace API.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      The Vault API has no event, webhook, push-notification or watch surface — no `watch`
+      method exists among the 33 in the Discovery document, and Google publishes no Vault
+      channel in the Google Workspace Events API. Nothing to describe in AsyncAPI.
+domain_standards:
+  - id: edrm-ediscovery-reference-model
+    conforms: partial
+    market: eDiscovery / legal hold / information governance
+    evidence: >-
+      Vault's own resource model is the EDRM vocabulary rendered as an API — Matter, Hold,
+      HeldAccount, SavedQuery, Export with an ExportOptions/cloudStorageSink delivery, which
+      maps to EDRM's Identification, Preservation, Collection and Production stages. This is a
+      vocabulary alignment observed in the contract's schema names, not a declared conformance:
+      Google states no EDRM conformance claim anywhere in the docs or the Discovery document,
+      and there is no EDRM certification to hold.
+    caveat: >-
+      Recorded as partial and evidence-backed rather than true. EDRM is a reference model, not
+      a wire format, so no contract can conform to it in the sense this file uses elsewhere.
+  - id: edrm-load-file-formats
+    conforms: unknown
+    evidence: >-
+      Export output format is chosen through ExportOptions (mbox/PST for mail, and the
+      documented export formats for Drive and Chat). The Discovery document names the options
+      but the produced load files are described in the Vault help centre rather than in the
+      API contract, so no conformance claim is made here.
+compliance:
+  program_published: true
+  certifications_source: https://workspace.google.com/security/
+  named_on_provider_page: [FedRAMP, CJIS, HIPAA, 'US DoD', 'ISO/IEC standards']
+  named_note: >-
+    These are the compliance regimes Google Workspace's own security page names in prose. The
+    per-standard certificate pages (ISO/IEC 27001, 27017, 27018, SOC 2, FedRAMP, HIPAA) each
+    returned HTTP 200 on 2026-09-12 under cloud.google.com/security/compliance/, but the
+    machine-readable scope list is rendered client-side, so no per-standard Workspace scope is
+    asserted here beyond what the provider states in prose.
+  reports: https://cloud.google.com/security/compliance/compliance-reports-manager
+  detail: security/google-vault-trust-center.yml
+summary:
+  asserted: 18
+  conforms_true: 8
+  conforms_false: 8
+  partial_or_unknown: 2

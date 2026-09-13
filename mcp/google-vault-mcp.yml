@@ -1,0 +1,137 @@
+generated: '2026-09-12'
+method: derived
+status: candidate
+source: >-
+  discovery/google-vault-discovery-v1.json and openapi/*.yml — derived. Google publishes NO
+  MCP server for Vault.
+note: >-
+  Google does ship first-party remote MCP servers for Google Workspace, and Vault is not one
+  of them. The provider's own configuration page
+  (https://developers.google.com/workspace/guides/configure-mcp-servers) enumerates exactly
+  eight product endpoints — Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat and People —
+  all shaped <product>mcp.googleapis.com/mcp/v1. On 2026-09-12 a tools/list POST to the
+  host that would follow that naming pattern for Vault returned HTTP 404, while the same
+  request to the documented gmailmcp.googleapis.com/mcp/v1 endpoint returned HTTP 200 with a
+  real tool list — a controlled negative, not a network failure. The tools below are a
+  CANDIDATE surface derived from the 33 methods in Google's own Discovery document. Nobody
+  ships them. No endpoint is invented here and no MCPServer pointer is wired in apis.yml.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+  probe:
+    documented_endpoint_list: https://developers.google.com/workspace/guides/configure-mcp-servers
+    vault_listed: false
+    negative_probe:
+      url: https://vaultmcp.googleapis.com/mcp/v1
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+      http_status: 404
+      note: >-
+        Probed only to confirm the absence implied by Google's own list. It is NOT a published
+        endpoint and must never be recorded as one.
+    control:
+      url: https://gmailmcp.googleapis.com/mcp/v1
+      http_status: 200
+      note: Documented Google endpoint; returned a real tools/list payload, so the probe path works.
+authorization:
+  model: OAuth 2.0 with Google Workspace Vault privileges
+  scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+candidate_tools:
+  - name: list_matters
+    description: List the Vault matters visible to the caller, optionally filtered by state.
+    rest_method: vault.matters.list
+    source_operation: openapi/google-vault-matters-api-openapi.yml#matters.list
+    read_only: true
+    scope: https://www.googleapis.com/auth/ediscovery.readonly
+  - name: get_matter
+    description: Read one matter by id, in BASIC or FULL view.
+    rest_method: vault.matters.get
+    read_only: true
+    scope: https://www.googleapis.com/auth/ediscovery.readonly
+  - name: create_matter
+    description: Create a new eDiscovery matter.
+    rest_method: vault.matters.create
+    read_only: false
+    scope: https://www.googleapis.com/auth/ediscovery
+  - name: close_matter
+    description: Close a matter. Reversible with reopen_matter.
+    rest_method: vault.matters.close
+    read_only: false
+  - name: reopen_matter
+    description: Reopen a closed matter.
+    rest_method: vault.matters.reopen
+    read_only: false
+  - name: delete_matter
+    description: >-
+      Delete a closed matter. Soft delete — restorable with undelete_matter for approximately
+      30 days, then permanently purged.
+    rest_method: vault.matters.delete
+    read_only: false
+    destructive: true
+  - name: undelete_matter
+    description: Restore a matter deleted within the last ~30 days.
+    rest_method: vault.matters.undelete
+    read_only: false
+  - name: count_matter_artifacts
+    description: >-
+      Count the artifacts a search query would return, as a long-running operation. The safest
+      rehearsal available before creating an export.
+    rest_method: vault.matters.count
+    read_only: false
+    scope: https://www.googleapis.com/auth/ediscovery
+    note: Read-shaped but gated behind the full ediscovery scope by the provider.
+  - name: list_holds
+    description: List the legal holds on a matter.
+    rest_method: vault.matters.holds.list
+    read_only: true
+  - name: create_hold
+    description: Place a legal hold on accounts or an org unit for a corpus.
+    rest_method: vault.matters.holds.create
+    read_only: false
+  - name: delete_hold
+    description: >-
+      Remove a legal hold. IRREVERSIBLE — no restore method exists, and data the hold was
+      preserving becomes subject to normal retention again.
+    rest_method: vault.matters.holds.delete
+    read_only: false
+    destructive: true
+  - name: add_held_accounts
+    description: Add accounts to an existing hold.
+    rest_method: vault.matters.holds.addHeldAccounts
+    read_only: false
+  - name: remove_held_accounts
+    description: Remove accounts from a hold.
+    rest_method: vault.matters.holds.removeHeldAccounts
+    read_only: false
+  - name: list_saved_queries
+    description: List the saved search queries on a matter.
+    rest_method: vault.matters.savedQueries.list
+    read_only: true
+  - name: create_export
+    description: >-
+      Start an export of matching data. Consumes one of the 20 organization-wide concurrent
+      export slots; poll get_export until status leaves IN_PROGRESS.
+    rest_method: vault.matters.exports.create
+    read_only: false
+  - name: get_export
+    description: Read an export's status and stats.
+    rest_method: vault.matters.exports.get
+    read_only: true
+  - name: get_operation
+    description: Poll a long-running Vault operation.
+    rest_method: vault.operations.get
+    read_only: true
+coverage:
+  rest_methods_total: 33
+  candidate_tools: 17
+  note: >-
+    The candidate list collapses the 33 methods to the flows an agent would actually drive;
+    the remaining methods (permission management, per-account hold CRUD, operations
+    cancel/delete/list, savedQueries create/get/delete, exports list/delete, holds get/update)
+    are reachable through the REST surface and are deliberately not promoted to tools here.

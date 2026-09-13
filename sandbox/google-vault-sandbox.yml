@@ -1,0 +1,63 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/vault/quickstart/python,
+  https://developers.google.com/workspace/vault/quickstart/java,
+  https://developers.google.com/workspace/vault/reference/rest/v1/matters and
+  https://developers.google.com/workspace/vault/guides/count
+description: >-
+  Vault has NO sandbox. There is no test host, no test-mode key prefix, no magic test
+  identifiers, no fixtures and no test clock. Every call goes to production
+  vault.googleapis.com against a real Google Workspace organisation's real mail, Drive, Chat,
+  Voice, Calendar and Gemini data. That is unusually consequential here: this is the API that
+  places and lifts legal holds, so a careless write is a compliance event, not a dirty test
+  record.
+test_live_separation:
+  supported: false
+  key_prefixes: null
+  note: >-
+    Credentials are OAuth tokens belonging to a real Workspace user with Vault privileges.
+    Isolation can only be achieved with a separate Workspace domain — typically a Workspace
+    developer test domain — not with a mode flag.
+try_it_surface:
+  kind: api-explorer
+  supported: true
+  url: https://developers.google.com/workspace/vault/reference/rest/v1/matters/list
+  note: >-
+    Every method page in the REST reference embeds Google's API Explorer ("Try it!"), which
+    executes a real, authorized call against production with the signed-in user's credentials.
+    It is a console, not a sandbox: the writes it issues are real writes.
+  web_console: https://vault.google.com/
+test_values: []
+test_values_note: >-
+  Google publishes no magic matter ids, test account ids or simulator values for Vault.
+  The list is empty because the provider publishes nothing to put in it, not because none was
+  looked for.
+dry_run:
+  supported: false
+  nearest_equivalent: vault.matters.count
+  note: >-
+    matters.count runs a search query and returns counts as a long-running Operation without
+    creating a hold or an export. It is the only way to rehearse the expensive, hard-to-undo
+    operations on this API, and Google documents it as a guide of its own
+    (https://developers.google.com/workspace/vault/guides/count).
+safe_rehearsal:
+  approach: throwaway-workspace-domain-and-count-first
+  steps:
+    - Use a Google Workspace test domain with sample users, never the production tenant.
+    - Create a matter (matters.create) — cheap, reversible, and the container for everything else.
+    - Size the search with matters.count before exporting; poll operations.get until done.
+    - Only then call exports.create, which consumes one of 20 org-wide concurrent export slots.
+    - Clean up with matters.close then matters.delete; undelete is available for ~30 days.
+  caution: >-
+    Do not rehearse hold deletion. holds.delete has no restore method anywhere in the API, and
+    lifting a hold releases the data it was preserving back to normal retention. See the
+    reversibility block in conventions/google-vault-conventions.yml.
+free_evaluation:
+  free_tier: null
+  note: >-
+    The API itself carries no separate charge — the provider's usage-limits page states the
+    Vault API is available at no additional cost to Google Workspace customers — but it
+    requires a Workspace edition that includes Vault, or a Vault add-on license. There is no
+    free evaluation of the API independent of a Workspace subscription.
+  source: https://developers.google.com/workspace/vault/limits

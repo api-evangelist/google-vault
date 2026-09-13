@@ -1,23 +1,99 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/google-vault-openapi.yml
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/vault/auth
+docs: https://developers.google.com/workspace/vault/auth
+references:
+  - https://developers.google.com/workspace/vault/auth
+  - https://developers.google.com/identity/protocols/oauth2/scopes#vault
+  - discovery/google-vault-discovery-v1.json
+note: >-
+  Google publishes exactly two OAuth 2.0 scopes for the Vault API and no more. The docs page
+  names them and their descriptions but does not say which method needs which — so the
+  per-method binding below was read from the provider's own Discovery document
+  (id vault:v1, revision 20260905), where every one of the 33 methods carries its own
+  scopes[] array. Descriptions are the provider's verbatim strings from that document.
 schemes:
-- name: googleOAuth
-  source: openapi/google-vault-openapi.yml
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
-    tokenUrl: https://oauth2.googleapis.com/token
+  - name: googleOAuth
+    type: oauth2
+    source: openapi/*.yml + discovery/google-vault-discovery-v1.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+        tokenUrl: https://oauth2.googleapis.com/token
 scopes:
-- scope: https://www.googleapis.com/auth/ediscovery
-  description: Manage all Vault data
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/google-vault-openapi.yml
-- scope: https://www.googleapis.com/auth/ediscovery.readonly
-  description: Read-only Vault data
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/google-vault-openapi.yml
+  - scope: https://www.googleapis.com/auth/ediscovery
+    description: Manage your eDiscovery data
+    sensitivity: not-published
+    grants: read+write
+    method_count: 33
+    flows: [authorizationCode]
+    sources:
+      - https://developers.google.com/workspace/vault/auth
+      - discovery/google-vault-discovery-v1.json
+  - scope: https://www.googleapis.com/auth/ediscovery.readonly
+    description: View your eDiscovery data
+    sensitivity: not-published
+    grants: read
+    method_count: 11
+    flows: [authorizationCode]
+    sources:
+      - https://developers.google.com/workspace/vault/auth
+      - discovery/google-vault-discovery-v1.json
+scope_bindings:
+  - scope_set: [https://www.googleapis.com/auth/ediscovery]
+    kind: write-only
+    count: 22
+    methods:
+      - vault.matters.addPermissions
+      - vault.matters.close
+      - vault.matters.count
+      - vault.matters.create
+      - vault.matters.delete
+      - vault.matters.exports.create
+      - vault.matters.exports.delete
+      - vault.matters.holds.accounts.create
+      - vault.matters.holds.accounts.delete
+      - vault.matters.holds.addHeldAccounts
+      - vault.matters.holds.create
+      - vault.matters.holds.delete
+      - vault.matters.holds.removeHeldAccounts
+      - vault.matters.holds.update
+      - vault.matters.removePermissions
+      - vault.matters.reopen
+      - vault.matters.savedQueries.create
+      - vault.matters.savedQueries.delete
+      - vault.matters.undelete
+      - vault.matters.update
+      - vault.operations.cancel
+      - vault.operations.delete
+    note: >-
+      vault.matters.count is a read-shaped operation (it returns search counts) that Google
+      nonetheless gates behind the full ediscovery scope — a read-only token cannot call it.
+  - scope_set:
+      - https://www.googleapis.com/auth/ediscovery
+      - https://www.googleapis.com/auth/ediscovery.readonly
+    kind: read
+    count: 11
+    methods:
+      - vault.matters.exports.get
+      - vault.matters.exports.list
+      - vault.matters.get
+      - vault.matters.holds.accounts.list
+      - vault.matters.holds.get
+      - vault.matters.holds.list
+      - vault.matters.list
+      - vault.matters.savedQueries.get
+      - vault.matters.savedQueries.list
+      - vault.operations.get
+      - vault.operations.list
+least_privilege:
+  guidance: >-
+    Google's own wording on the scopes page: "choose the most narrowly focused scope possible
+    and avoid requesting scopes that your app doesn't require." An agent that only reads
+    matters, holds, saved queries, exports and operations needs ediscovery.readonly alone.
+  read_only_sufficient_for: 11
+  requires_full_scope: 22
+  sensitivity_note: >-
+    Google's master OAuth 2.0 scopes page lists both Vault scopes with a description only and
+    attaches no Sensitive/Restricted label to either, so no sensitivity class is asserted here.
+    Checked 2026-09-12 against https://developers.google.com/identity/protocols/oauth2/scopes.

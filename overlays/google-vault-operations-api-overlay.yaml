@@ -1,0 +1,67 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Google Vault operations-api
+  version: 1.0.0
+extends: ../openapi/google-vault-operations-api-openapi.yml
+x-generated: '2026-09-12'
+x-method: derived
+x-source: discovery/google-vault-discovery-v1.json + repo artifacts
+x-note: Non-destructive overlay. Adds Google Discovery method descriptions, per-method required scopes,
+  reversal/irreversibility markers and pointers to the derived artifacts in this repo. The underlying
+  OpenAPI is never mutated.
+actions:
+- target: $.info
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/google-vault
+    x-contract-source: https://vault.googleapis.com/$discovery/rest?version=v1
+    x-contract-revision: '20260905'
+    x-idempotency: none — no Idempotency-Key or client request id on any mutating method
+    x-error-envelope: google.rpc.Status (AIP-193), not RFC 9457 problem+json
+    x-rate-limit-headers: none published; HTTP 429 is the only runtime signal
+- target: $
+  update:
+    x-artifacts:
+      authentication: authentication/google-vault-authentication.yml
+      scopes: scopes/google-vault-scopes.yml
+      conventions: conventions/google-vault-conventions.yml
+      errors: errors/google-vault-problem-types.yml
+      rate-limits: rate-limits/google-vault-rate-limits.yml
+      data-model: data-model/google-vault-data-model.yml
+      lifecycle: lifecycle/google-vault-lifecycle.yml
+- target: $.paths["/v1/operations"].get
+  update:
+    x-google-description: Lists operations that match the specified filter in the request. If the server
+      doesn't support this method, it returns `UNIMPLEMENTED`.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.operations.list
+- target: $.paths["/v1/operations/{operationsId}"].get
+  update:
+    x-google-description: Gets the latest state of a long-running operation. Clients can use this method
+      to poll the operation result at intervals as recommended by the API service.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.operations.get
+- target: $.paths["/v1/operations/{operationsId}"].delete
+  update:
+    x-google-description: Deletes a long-running operation. This method indicates that the client is no
+      longer interested in the operation result. It does not cancel the operation. If the server doesn't
+      support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.operations.delete
+    x-irreversible: true
+- target: $.paths["/v1/operations/{operationsId}:cancel"].post
+  update:
+    x-google-description: Starts asynchronous cancellation on a long-running operation. The server makes
+      a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support
+      this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation
+      or other methods to check whether the cancellation succeeded or whether the operation completed
+      despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes
+      an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to
+      `Code.CANCELLED`.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.operations.cancel

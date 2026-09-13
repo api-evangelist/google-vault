@@ -1,0 +1,262 @@
+generated: '2026-09-12'
+method: probed
+source: live HTTPS probes of every host this record knows
+note: >-
+  Probed the registrable domain (google.com + www), the docs host (developers.google.com), the
+  API host from apis.yml baseURL and every OpenAPI servers[] entry (vault.googleapis.com), the
+  parent API domain (googleapis.com), the product/marketing host (workspace.google.com), and
+  the two OAuth hosts the Vault contract names — accounts.google.com (authorizationUrl) and
+  oauth2.googleapis.com (tokenUrl). Real documents were served only on www.google.com (an RFC
+  9116 security.txt) and accounts.google.com (OIDC discovery plus RFC 8414 authorization-server
+  metadata). Every host was given a random negative-control path
+  (/.well-known/gv-negative-control-4c8de21b.json) and every one returned the same status it
+  returns for a genuine miss, so no 200 here is a catch-all artefact. workspace.google.com
+  answers 302 to every path including the control, so nothing on that host is counted.
+  google.com 301s to www.google.com, where the security.txt is actually served.
+hit_count: 3
+hosts:
+  - host: https://www.google.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: google-vault-security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://google.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 301
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://developers.google.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://vault.googleapis.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://googleapis.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://workspace.google.com
+    path_echo_control: passed
+    control_status: 302
+    documents:
+      - path: /.well-known/security.txt
+        status: 302
+      - path: /.well-known/openid-configuration
+        status: 302
+      - path: /.well-known/oauth-authorization-server
+        status: 302
+      - path: /.well-known/oauth-protected-resource
+        status: 302
+      - path: /.well-known/api-catalog
+        status: 302
+      - path: /.well-known/ai-plugin.json
+        status: 302
+      - path: /.well-known/apis.json
+        status: 302
+      - path: /apis.json
+        status: 302
+      - path: /.well-known/aauth-resource.json
+        status: 302
+      - path: /.well-known/agent-card.json
+        status: 302
+      - path: /.well-known/agent.json
+        status: 302
+      - path: /llms.txt
+        status: 302
+  - host: https://accounts.google.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: google-vault-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: google-vault-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://oauth2.googleapis.com
+    path_echo_control: passed
+    control_status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+documents_detail:
+  - file: google-vault-security.txt
+    standard: RFC 9116
+    url: https://www.google.com/.well-known/security.txt
+    fields: [Contact, Encryption, Acknowledgments, Policy, Hiring, Expires]
+    expires: '2030-04-01'
+  - file: google-vault-openid-configuration.json
+    standard: OpenID Connect Discovery 1.0
+    url: https://accounts.google.com/.well-known/openid-configuration
+    issuer: https://accounts.google.com
+    note: >-
+      The authorization server behind the Vault API's OAuth 2.0 securityScheme. Its
+      token_endpoint (https://oauth2.googleapis.com/token) is the tokenUrl in every
+      openapi/ document in this repo.
+  - file: google-vault-oauth-authorization-server.json
+    standard: RFC 8414
+    url: https://accounts.google.com/.well-known/oauth-authorization-server
+    issuer: https://accounts.google.com

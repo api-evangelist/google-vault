@@ -1,0 +1,87 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/vault/release-notes,
+  https://workspace.google.com/terms/premier_terms/,
+  https://workspace.google.com/terms/sla/ and discovery/google-vault-discovery-v1.json
+versioning:
+  scheme: uri-path
+  current: v1
+  revision: '20260905'
+  revision_source: discovery/google-vault-discovery-v1.json
+  docs: https://developers.google.com/workspace/vault/reference/rest
+  note: >-
+    The Vault API has shipped exactly one major version, v1, since launch. Additive change is
+    dated only through the Discovery document's `revision` field; there is no v2 and no
+    announced successor.
+deprecation:
+  policy_url: https://workspace.google.com/terms/premier_terms/
+  notice_period: 12 months
+  applies_to: >-
+    Discontinuation of a Google Workspace Service, and backwards-incompatible modification of
+    a customer-facing Google API — Section 1.4(e) of the Google Workspace Terms of Service.
+  quote: >-
+    "Google will notify Customer at least 12 months before: (i) discontinuing any Service (or
+    associated material functionality) unless Google replaces such discontinued Service or
+    functionality with a materially similar Service or functionality; or (ii) significantly
+    modifying a Customer-facing Google API in a backwards-incompatible manner."
+  carve_outs: >-
+    The same section preserves Google's ability to make changes required to comply with
+    applicable law, address a material security risk, or avoid a substantial economic or
+    technical burden.
+  summary: >-
+    The 12-month commitment is a Workspace platform contract term (ToS 1.4(e)), read verbatim
+    on 2026-09-12, and it names backwards-incompatible API change explicitly. It is not a
+    Vault-API-specific policy — Google publishes no deprecation page for the Vault API itself,
+    and no Sunset or Deprecation response header is documented.
+  sunset_header: false
+  rfc8594_sunset_header: not documented
+  deprecation_notices: https://developers.google.com/workspace/vault/release-notes
+  history:
+    - date: '2020-06-01'
+      change: All Team Drive-related fields were removed from the Vault API.
+      breaking: true
+      source: https://developers.google.com/workspace/vault/release-notes
+    - date: '2019-06-10'
+      change: >-
+        "Team Drive" was renamed "shared drive"; the corresponding fields changed in
+        DriveOptions, HeldDriveQuery and SearchMethod.
+      breaking: true
+      source: https://developers.google.com/workspace/vault/release-notes
+deprecated_operations: []
+deprecated_operations_note: >-
+  No method in the 33 of the Discovery document (revision 20260905) and no operation in
+  openapi/ carries a deprecated flag. The last removals were the 2020 Team Drive fields.
+sla:
+  url: https://workspace.google.com/terms/sla/
+  product: Google Workspace Service Level Agreement
+  note: >-
+    Vault is covered by the Google Workspace SLA as part of the editions that include it; it
+    has no separate API SLA and no published latency or availability target of its own.
+status_page:
+  url: https://www.google.com/appsstatus/dashboard/
+  name: Google Workspace Status Dashboard
+  vault_listed: true
+  summary_url: https://www.google.com/appsstatus/dashboard/summary
+support:
+  url: https://developers.google.com/workspace/vault/support
+  help_center: https://knowledge.workspace.google.com/vault
+  issue_tracker: https://developers.google.com/workspace/vault/support
+  note: >-
+    Developer support routes through the Workspace developer support page; admin/product
+    questions route to the Vault help centre. There is no public bug tracker dedicated to the
+    Vault API.
+release_notes: https://developers.google.com/workspace/vault/release-notes
+release_cadence:
+  observed: dormant
+  note: >-
+    The public release-notes feed carries three dated entries in total, the most recent from
+    2020-06-01, while the Discovery document is still being regenerated (revision 20260905).
+    The contract is maintained; the announcement channel is effectively idle. An integrator
+    watching release notes alone would see no change for six years.
+licensing_change:
+  date: '2025-11-01'
+  change: >-
+    From 1 November 2025 a Google Workspace admin must hold a Vault license to continue using
+    Vault, per the Vault overview in the Workspace knowledge base.
+  source: https://knowledge.workspace.google.com/vault/getting-started/vault-overview

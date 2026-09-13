@@ -1,0 +1,49 @@
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/vault/release-notes
+scheme: dated
+current_version: v1
+api_revision: '20260905'
+api_revision_source: discovery/google-vault-discovery-v1.json
+note: >-
+  This is the complete published changelog, not a recent window. Google's Vault API release
+  notes page carries exactly three dated entries and the newest is from June 2020. The API
+  itself is not frozen — the Discovery document was regenerated on 2026-09-05 — so the gap is
+  in the announcement channel rather than the contract. Anyone depending on release notes to
+  detect Vault API change is watching a channel that has not moved in six years.
+entry_count: 3
+entries:
+  - date: '2020-06-01'
+    kind: deprecation
+    breaking: true
+    highlight: All Team Drive-related fields are removed from the Vault API.
+  - date: '2019-06-10'
+    kind: change
+    breaking: true
+    highlight: >-
+      "Team Drive" is renamed "shared drive"; corresponding API fields updated in DriveOptions,
+      HeldDriveQuery and SearchMethod.
+  - date: '2019-03-16'
+    kind: announcement
+    breaking: false
+    highlight: >-
+      Hangouts Chat and Google Meet replace classic Hangouts; Vault admins are told to prepare
+      for the migration of covered data.
+alternative_change_signals:
+  - signal: Discovery document revision
+    url: https://vault.googleapis.com/$discovery/rest?version=v1
+    field: revision
+    current: '20260905'
+    note: >-
+      The only reliable machine-readable change signal on this API. Diffing the Discovery
+      document between revisions is how an integrator sees additive change that never reaches
+      the release notes.
+  - signal: Generated client library versions
+    note: >-
+      The Maven artifact pins the Discovery revision it was generated from
+      (google-api-services-vault:v1-rev20260528-2.0.0), so registry releases are a second-hand
+      record of contract change.
+    detail: packages/google-vault-packages.yml
+  - signal: Google Workspace Updates blog
+    url: https://workspace.google.com/blog/
+    note: Product-level Vault announcements land here rather than in the API release notes.

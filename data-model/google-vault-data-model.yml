@@ -1,0 +1,126 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  discovery/google-vault-discovery-v1.json (71 schemas, revision 20260905) and openapi/*.yml,
+  cross-checked against https://developers.google.com/workspace/vault/reference/rest
+description: >-
+  The Vault entity graph. Everything hangs off Matter: a matter is the container an
+  organisation opens for a legal case, and holds, saved queries and exports only exist inside
+  one. Identifiers are opaque server-assigned strings with no type prefix, and every child is
+  addressed by its parent's matterId in the path — there is no global lookup of a hold or an
+  export.
+root_entity: Matter
+entities:
+  - name: Matter
+    id_field: matterId
+    resource_path: /v1/matters/{matterId}
+    fields: [matterId, name, description, state, matterPermissions, matterRegion]
+    states: [STATE_UNSPECIFIED, OPEN, CLOSED, DELETED]
+    lifecycle: >-
+      create -> (close <-> reopen) -> delete (soft, ~30 days) -> undelete, or permanent purge.
+      Only a closed matter can be deleted.
+    relationships:
+      - has_many: MatterPermission
+        via: matterPermissions
+      - has_many: Hold
+        via: parent path matterId
+      - has_many: SavedQuery
+        via: parent path matterId
+      - has_many: Export
+        via: parent path matterId
+  - name: MatterPermission
+    id_field: accountId
+    resource_path: /v1/matters/{matterId}:addPermissions
+    fields: [accountId, role]
+    relationships:
+      - belongs_to: Matter
+        via: matterId (path)
+      - references: Account
+        via: accountId
+    note: >-
+      Not independently addressable — managed only through matters.addPermissions and
+      matters.removePermissions, and read back inside Matter.matterPermissions in the FULL view.
+  - name: Hold
+    id_field: holdId
+    resource_path: /v1/matters/{matterId}/holds/{holdId}
+    fields: [holdId, name, corpus, query, orgUnit, accounts, updateTime]
+    relationships:
+      - belongs_to: Matter
+        via: matterId (path)
+      - has_many: HeldAccount
+        via: accounts
+      - references: OrgUnit
+        via: orgUnit
+    note: >-
+      A hold is scoped either to an org unit OR to an explicit account list, and to exactly one
+      corpus. The corpus enum in revision 20260905 is DRIVE, MAIL, GROUPS, HANGOUTS_CHAT,
+      VOICE, CALENDAR and GEMINI — Gemini conversations are now a first-class holdable corpus.
+  - name: HeldAccount
+    id_field: accountId
+    resource_path: /v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}
+    fields: [accountId, email, firstName, lastName, holdTime]
+    relationships:
+      - belongs_to: Hold
+        via: holdId (path)
+      - references: Account
+        via: accountId or email
+  - name: SavedQuery
+    id_field: savedQueryId
+    resource_path: /v1/matters/{matterId}/savedQueries/{savedQueryId}
+    fields: [savedQueryId, displayName, matterId, query, createTime]
+    relationships:
+      - belongs_to: Matter
+        via: matterId
+      - embeds: Query
+  - name: Export
+    id_field: id
+    resource_path: /v1/matters/{matterId}/exports/{exportId}
+    fields: [id, name, matterId, requester, query, exportOptions, status, stats, createTime, cloudStorageSink, parentExportId]
+    states: [EXPORT_STATUS_UNSPECIFIED, IN_PROGRESS, COMPLETED, FAILED]
+    relationships:
+      - belongs_to: Matter
+        via: matterId
+      - embeds: Query
+      - embeds: ExportOptions
+      - has_one: CloudStorageSink
+        via: cloudStorageSink
+      - belongs_to: Export
+        via: parentExportId
+        note: Self-reference — a re-run export points at the export it was derived from.
+  - name: Query
+    kind: value-object
+    embedded_in: [SavedQuery, Export, Hold]
+    fields: [corpus, dataScope, searchMethod, method, terms, timeZone, startTime, endTime, accountInfo, orgUnitInfo, sharedDriveInfo, teamDriveInfo, hangoutsChatInfo, sitesUrlInfo, driveDocumentInfo, mailOptions, driveOptions, hangoutsChatOptions, voiceOptions, calendarOptions, geminiOptions]
+    note: >-
+      The reusable search definition shared by holds, saved queries and exports. searchMethod
+      selects the target — ACCOUNT, ORG_UNIT, TEAM_DRIVE, SHARED_DRIVE, DRIVE_DOCUMENT, ROOM,
+      SITES_URL or ENTIRE_ORG — and each target has its own companion *Info object, while each
+      corpus has its own *Options object. dataScope narrows to ALL_DATA, HELD_DATA or
+      UNPROCESSED_DATA.
+  - name: Operation
+    id_field: name
+    resource_path: /v1/{+name}
+    fields: [name, metadata, done, error, response]
+    relationships:
+      - produced_by: vault.matters.count
+    note: Standard Google long-running operation; the only method declaring it as a response is matters.count.
+  - name: CloudStorageSink
+    kind: value-object
+    embedded_in: [Export]
+    fields: [files]
+    note: >-
+      Where a completed export's files land in Google Cloud Storage. This is the only place the
+      Vault API hands out exported content rather than metadata.
+graph_notes:
+  - Every child resource is addressed through its parent matterId; nothing is globally addressable.
+  - >-
+    Query is the single most reused object in the schema — the same shape drives what a hold
+    preserves, what a saved query remembers and what an export extracts, which is why an agent
+    can size a query with matters.count and then reuse it verbatim in exports.create.
+  - >-
+    accountId appears in three entities (MatterPermission, HeldAccount, and account-targeted
+    Query) and always refers to a Google Workspace user id; it is never a Vault-local id.
+counts:
+  entities: 9
+  schemas_in_discovery: 71
+  methods: 33

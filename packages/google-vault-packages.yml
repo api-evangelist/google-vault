@@ -1,0 +1,118 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/api-client-library plus a metadata read of each registry
+  (registry.npmjs.org, pypi.org, search.maven.org, api.nuget.org, proxy.golang.org,
+  rubygems.org, repo.packagist.org) on 2026-09-12.
+note: >-
+  Google ships no Vault-only SDK in most languages. Vault is reached through Google's
+  generated API client libraries, which are first-party (published by the googleapis GitHub
+  organization) and generated from the same Discovery document saved in this repo at
+  discovery/google-vault-discovery-v1.json. Three of them ARE Vault-specific artifacts —
+  @googleapis/vault on npm, google-apis-vault_v1 on RubyGems and Google.Apis.Vault.v1 on
+  NuGet — and one is a Vault-specific Maven artifact, google-api-services-vault, whose version
+  string carries the Discovery revision it was generated from (v1-rev20260528). The Python, Go
+  and PHP entries are the umbrella clients that carry Vault as one service among many; there
+  is no narrower first-party package in those languages. Every version and date below was read
+  from the registry's own metadata endpoint on 2026-09-12. Nothing here is stale: the newest
+  release is one day old and the oldest is the Maven artifact at 2026-06-02.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@googleapis/vault"
+    url: https://www.npmjs.com/package/@googleapis/vault
+    install: npm install @googleapis/vault
+    repo: https://github.com/googleapis/google-api-nodejs-client/tree/main/src/apis/vault
+    official: true
+    vault_specific: true
+    version: 12.0.0
+    published: '2026-09-11'
+  - language: javascript
+    registry: npm
+    name: googleapis
+    url: https://www.npmjs.com/package/googleapis
+    install: npm install googleapis
+    repo: https://github.com/googleapis/google-api-nodejs-client
+    official: true
+    vault_specific: false
+    version: 180.0.0
+    published: '2026-09-10'
+    note: Umbrella Node.js client; Vault is reached as google.vault('v1').
+  - language: python
+    registry: pypi
+    name: google-api-python-client
+    url: https://pypi.org/project/google-api-python-client/
+    install: pip install google-api-python-client
+    repo: https://github.com/googleapis/google-api-python-client
+    official: true
+    vault_specific: false
+    version: 2.200.0
+    published: '2026-09-01'
+    note: >-
+      Vault is reached as build('vault', 'v1', credentials=creds). This is the client the
+      provider's own Python quickstart uses
+      (https://developers.google.com/workspace/vault/quickstart/python).
+  - language: java
+    registry: maven
+    name: com.google.apis:google-api-services-vault
+    url: https://central.sonatype.com/artifact/com.google.apis/google-api-services-vault
+    install: "implementation 'com.google.apis:google-api-services-vault:v1-rev20260528-2.0.0'"
+    repo: https://github.com/googleapis/google-api-java-client-services
+    official: true
+    vault_specific: true
+    version: v1-rev20260528-2.0.0
+    published: '2026-06-02'
+    note: >-
+      The version string pins the Discovery revision it was generated from (rev20260528). The
+      live Discovery document is revision 20260905, so this artifact is three revisions behind
+      the contract it wraps — a visible, provider-published lag rather than an inference.
+  - language: go
+    registry: go
+    name: google.golang.org/api
+    url: https://pkg.go.dev/google.golang.org/api/vault/v1
+    install: go get google.golang.org/api/vault/v1
+    repo: https://github.com/googleapis/google-api-go-client
+    official: true
+    vault_specific: false
+    version: v0.297.0
+    published: '2026-09-02'
+    note: The vault/v1 package lives inside the umbrella module; it is not separately versioned.
+  - language: ruby
+    registry: rubygems
+    name: google-apis-vault_v1
+    url: https://rubygems.org/gems/google-apis-vault_v1
+    install: gem install google-apis-vault_v1
+    repo: https://github.com/googleapis/google-api-ruby-client
+    official: true
+    vault_specific: true
+    version: 0.39.0
+    published: '2026-06-28'
+  - language: dotnet
+    registry: nuget
+    name: Google.Apis.Vault.v1
+    url: https://www.nuget.org/packages/Google.Apis.Vault.v1
+    install: dotnet add package Google.Apis.Vault.v1
+    repo: https://github.com/googleapis/google-api-dotnet-client
+    official: true
+    vault_specific: true
+    version: 1.75.0.4183
+    published: '2026-06-23'
+  - language: php
+    registry: packagist
+    name: google/apiclient
+    url: https://packagist.org/packages/google/apiclient
+    install: composer require google/apiclient
+    repo: https://github.com/googleapis/google-api-php-client
+    official: true
+    vault_specific: false
+    version: v2.19.4
+    published: '2026-06-29'
+    note: Vault is reached as Google\Service\Vault inside the umbrella PHP client.
+summary:
+  total: 8
+  official: 8
+  vault_specific: 4
+  languages: [javascript, python, java, go, ruby, dotnet, php]
+  registries: [npm, pypi, maven, go, rubygems, nuget, packagist]
+  oldest_release: '2026-06-02'
+  newest_release: '2026-09-11'

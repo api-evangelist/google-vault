@@ -1,0 +1,36 @@
+generated: '2026-09-12'
+method: generated
+source: >-
+  openapi/*.yml, discovery/google-vault-discovery-v1.json,
+  conventions/google-vault-conventions.yml and the provider's own guides at
+  https://developers.google.com/workspace/vault/guides
+note: >-
+  Packaged Agent Skills for the Google Vault API. Every operationId named in these skills was
+  read out of the OpenAPI documents in this repo, which are themselves derived from Google's
+  Discovery document (revision 20260905); none was invented. Each skill carries the
+  idempotency, reversibility and quota rules that apply to its flow, because this is an API
+  where a careless retry is a compliance event.
+skills:
+  - name: google-vault-open-matter-and-place-hold
+    file: google-vault-open-matter-and-place-hold.md
+    summary: Open a matter, grant collaborators, and place a legal hold on accounts or an org unit.
+    operations: [matters.create, matters.get, matters.addPermissions, matters.holds.create, matters.holds.list, matters.holds.addHeldAccounts, matters.holds.get]
+    risk: high
+    risk_note: Creates legal holds. holds.delete is irreversible, so the skill forbids using it as an undo.
+  - name: google-vault-size-and-run-an-export
+    file: google-vault-size-and-run-an-export.md
+    summary: Count what a query matches, save it, run the export and collect the Cloud Storage output.
+    operations: [matters.count, operations.get, matters.savedQueries.create, matters.exports.create, matters.exports.get, matters.exports.list]
+    risk: high
+    risk_note: Exports are capped at 20 concurrent per organization and emit real customer data.
+  - name: google-vault-close-and-delete-a-matter
+    file: google-vault-close-and-delete-a-matter.md
+    summary: Close, delete and (within ~30 days) restore a matter.
+    operations: [matters.get, matters.holds.list, matters.close, matters.delete, matters.undelete, matters.reopen, matters.list]
+    risk: medium
+    risk_note: Soft delete with a documented ~30-day restore window; only closed matters can be deleted.
+shared_rules:
+  - No idempotency key exists on this API — list before retrying a create.
+  - No sandbox, no test mode, no dry-run; matters.count is the only rehearsal.
+  - Errors are google.rpc.Status, not RFC 9457; 429 carries no Retry-After.
+  - matters.list costs 10 matter reads against a 600/minute organization-wide ceiling.

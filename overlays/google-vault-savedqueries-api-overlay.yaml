@@ -1,0 +1,57 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Google Vault savedqueries-api
+  version: 1.0.0
+extends: ../openapi/google-vault-savedqueries-api-openapi.yml
+x-generated: '2026-09-12'
+x-method: derived
+x-source: discovery/google-vault-discovery-v1.json + repo artifacts
+x-note: Non-destructive overlay. Adds Google Discovery method descriptions, per-method required scopes,
+  reversal/irreversibility markers and pointers to the derived artifacts in this repo. The underlying
+  OpenAPI is never mutated.
+actions:
+- target: $.info
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/google-vault
+    x-contract-source: https://vault.googleapis.com/$discovery/rest?version=v1
+    x-contract-revision: '20260905'
+    x-idempotency: none — no Idempotency-Key or client request id on any mutating method
+    x-error-envelope: google.rpc.Status (AIP-193), not RFC 9457 problem+json
+    x-rate-limit-headers: none published; HTTP 429 is the only runtime signal
+- target: $
+  update:
+    x-artifacts:
+      authentication: authentication/google-vault-authentication.yml
+      scopes: scopes/google-vault-scopes.yml
+      conventions: conventions/google-vault-conventions.yml
+      errors: errors/google-vault-problem-types.yml
+      rate-limits: rate-limits/google-vault-rate-limits.yml
+      data-model: data-model/google-vault-data-model.yml
+      lifecycle: lifecycle/google-vault-lifecycle.yml
+- target: $.paths["/v1/matters/{matterId}/savedQueries"].get
+  update:
+    x-google-description: Lists the saved queries in a matter.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.matters.savedQueries.list
+- target: $.paths["/v1/matters/{matterId}/savedQueries"].post
+  update:
+    x-google-description: Creates a saved query.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.savedQueries.create
+- target: $.paths["/v1/matters/{matterId}/savedQueries/{savedQueryId}"].get
+  update:
+    x-google-description: Retrieves the specified saved query.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    - https://www.googleapis.com/auth/ediscovery.readonly
+    x-discovery-method-id: vault.matters.savedQueries.get
+- target: $.paths["/v1/matters/{matterId}/savedQueries/{savedQueryId}"].delete
+  update:
+    x-google-description: Deletes the specified saved query.
+    x-required-scopes:
+    - https://www.googleapis.com/auth/ediscovery
+    x-discovery-method-id: vault.matters.savedQueries.delete
+    x-irreversible: true

@@ -1,0 +1,67 @@
+generated: '2026-09-12'
+method: searched
+source: https://workspace.google.com/security/
+references:
+  - https://workspace.google.com/security/
+  - https://cloud.google.com/security/compliance/offerings
+  - https://cloud.google.com/security/compliance/compliance-reports-manager
+  - https://safety.google/
+note: >-
+  Google does not run a single-page trust centre for Vault. Trust material is split across the
+  Google Workspace security page (product-level controls and named regimes), Google Cloud's
+  compliance offerings directory (per-standard certificates), the Compliance Reports Manager
+  (where a customer downloads the actual audit reports), and safety.google (consumer-facing
+  privacy). Every URL below returned HTTP 200 on 2026-09-12. Vault itself is an eDiscovery and
+  legal-hold product, so it is usually the thing a customer buys IN ORDER TO comply — the
+  compliance posture recorded here is Google Workspace's, which is the service boundary the
+  Vault API runs inside.
+pages:
+  - kind: security-overview
+    url: https://workspace.google.com/security/
+    status: 200
+  - kind: compliance-directory
+    url: https://cloud.google.com/security/compliance/offerings
+    status: 200
+    caveat: The per-standard list is rendered client-side and is not machine-readable.
+  - kind: audit-reports
+    url: https://cloud.google.com/security/compliance/compliance-reports-manager
+    status: 200
+  - kind: privacy
+    url: https://safety.google/
+    status: 200
+  - kind: privacy-policy
+    url: https://policies.google.com/privacy
+    status: 200
+certifications:
+  - name: FedRAMP
+    named_on: https://workspace.google.com/security/
+    detail_page: https://cloud.google.com/security/compliance/fedramp
+    detail_status: 200
+  - name: CJIS
+    named_on: https://workspace.google.com/security/
+  - name: HIPAA
+    named_on: https://workspace.google.com/security/
+    detail_page: https://cloud.google.com/security/compliance/hipaa-compliance
+    detail_status: 200
+  - name: US Department of Defense requirements
+    named_on: https://workspace.google.com/security/
+  - name: ISO/IEC 27001
+    named_on: https://cloud.google.com/security/compliance/iso-27001
+    detail_status: 200
+  - name: ISO/IEC 27017
+    named_on: https://cloud.google.com/security/compliance/iso-27017
+    detail_status: 200
+  - name: ISO/IEC 27018
+    named_on: https://cloud.google.com/security/compliance/iso-27018
+    detail_status: 200
+  - name: SOC 2
+    named_on: https://cloud.google.com/security/compliance/soc-2
+    detail_status: 200
+certifications_note: >-
+  The four ISO/SOC entries are recorded from their own certificate pages on
+  cloud.google.com/security/compliance/, each fetched and confirmed HTTP 200 on 2026-09-12.
+  The Workspace security page names FedRAMP, CJIS, HIPAA, DoD and "ISO/IEC standards" in prose
+  without enumerating the ISO numbers, so the numbers come from the certificate pages, not
+  from an inference.
+vulnerability_disclosure: security/google-vault-vulnerability-disclosure.yml
+domain_security: security/google-vault-domain-security.yml
