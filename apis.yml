@@ -161,20 +161,16 @@ apis:
     url: https://workspace.google.com/pricing.html
   - type: TermsOfService
     url: https://developers.google.com/terms
-- aid: google-vault:google-vault-savedqueries-api
-  name: Google Vault SavedQueries API
-  description: The SavedQueries API from Google Vault — 2 operation(s) for savedqueries.
+- aid: google-vault:google-vault-saved-queries-api
+  name: Google Vault Saved Queries API
+  description: The Saved Queries API from Google Vault — 2 operation(s) for saved queries.
   humanURL: https://developers.google.com/workspace/vault
   baseURL: https://vault.googleapis.com
   tags:
   - Saved Queries
-  tags_raw:
-  - SavedQueries
   properties:
   - type: OpenAPI
-    url: openapi/google-vault-savedqueries-api-openapi.yml
-  - type: Overlay
-    url: overlays/google-vault-savedqueries-api-overlay.yaml
+    url: openapi/google-vault-saved-queries-api-openapi.yml
   - type: APIReference
     url: https://developers.google.com/workspace/vault/reference/rest
   - type: Documentation
@@ -186,6 +182,8 @@ apis:
   - type: TermsOfService
     url: https://developers.google.com/terms
 common:
+  - type: Overlay
+    url: overlays/google-vault-savedqueries-api-overlay.yaml
   - type: Website
     url: https://www.google.com/
   - type: AgenticAccess
