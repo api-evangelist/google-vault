@@ -122,6 +122,8 @@ apis:
   humanURL: https://developers.google.com/workspace/vault
   baseURL: https://vault.googleapis.com
   tags:
+  - Matter
+  tags_raw:
   - Matters
   properties:
   - type: OpenAPI
