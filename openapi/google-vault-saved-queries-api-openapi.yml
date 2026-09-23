@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Google Vault Exports Saved Queries API
+  title: Google Vault Saved Queries API
   description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
   version: v1
 servers:
@@ -8,12 +8,12 @@ servers:
 security:
 - googleOAuth: []
 tags:
-- name: SavedQueries
+- name: Saved Queries
 paths:
   /v1/matters/{matterId}/savedQueries:
     get:
       tags:
-      - SavedQueries
+      - Saved Queries
       summary: List saved queries
       operationId: matters.savedQueries.list
       parameters:
@@ -27,7 +27,7 @@ paths:
           description: Saved queries
     post:
       tags:
-      - SavedQueries
+      - Saved Queries
       summary: Create saved query
       operationId: matters.savedQueries.create
       parameters:
@@ -48,7 +48,7 @@ paths:
   /v1/matters/{matterId}/savedQueries/{savedQueryId}:
     get:
       tags:
-      - SavedQueries
+      - Saved Queries
       summary: Get saved query
       operationId: matters.savedQueries.get
       parameters:
@@ -67,7 +67,7 @@ paths:
           description: SavedQuery
     delete:
       tags:
-      - SavedQueries
+      - Saved Queries
       summary: Delete saved query
       operationId: matters.savedQueries.delete
       parameters:
@@ -86,20 +86,6 @@ paths:
           description: Empty
 components:
   schemas:
-    SavedQuery:
-      type: object
-      properties:
-        savedQueryId:
-          type: string
-        matterId:
-          type: string
-        displayName:
-          type: string
-        query:
-          $ref: '#/components/schemas/Query'
-        createTime:
-          type: string
-          format: date-time
     Query:
       type: object
       properties:
@@ -141,6 +127,20 @@ components:
           format: date-time
         timeZone:
           type: string
+    SavedQuery:
+      type: object
+      properties:
+        savedQueryId:
+          type: string
+        matterId:
+          type: string
+        displayName:
+          type: string
+        query:
+          $ref: '#/components/schemas/Query'
+        createTime:
+          type: string
+          format: date-time
   securitySchemes:
     googleOAuth:
       type: oauth2

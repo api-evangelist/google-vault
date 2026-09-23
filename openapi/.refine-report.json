@@ -1,12 +1,7 @@
 {
   "provider": "google-vault",
   "sources": [
-    "google-vault-exports-api-openapi.yml",
-    "google-vault-heldaccounts-api-openapi.yml",
-    "google-vault-holds-api-openapi.yml",
-    "google-vault-matters-api-openapi.yml",
-    "google-vault-operations-api-openapi.yml",
-    "google-vault-savedqueries-api-openapi.yml"
+    "_original/google-vault-openapi.yml"
   ],
   "outputs": [
     "google-vault-exports-api-openapi.yml",
@@ -16,17 +11,23 @@
     "google-vault-operations-api-openapi.yml",
     "google-vault-savedqueries-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
-    "google-vault-exports-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-vault-heldaccounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-vault-holds-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-vault-matters-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-vault-operations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-vault-savedqueries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "google-vault-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: google-vault-saved-queries-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 6 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "google-vault-exports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-vault-heldaccounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-vault-holds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-vault-matters-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-vault-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-vault-saved-queries-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

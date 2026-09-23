@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Google Vault Exports Holds API
+  title: Google Vault Holds API
   description: Best-effort OpenAPI 3.1 for the Google Vault API, an information governance and eDiscovery API for Google Workspace. Covers matters, holds, exports, saved queries, held accounts, and long-running operations.
   version: v1
 servers:
