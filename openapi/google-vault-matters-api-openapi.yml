@@ -261,6 +261,31 @@ paths:
           description: Empty
 components:
   schemas:
+    Matter:
+      type: object
+      properties:
+        matterId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+          enum:
+          - STATE_UNSPECIFIED
+          - OPEN
+          - CLOSED
+          - DELETED
+        matterPermissions:
+          type: array
+          items:
+            type: object
+            properties:
+              role:
+                type: string
+              accountId:
+                type: string
     Query:
       type: object
       properties:
@@ -302,31 +327,6 @@ components:
           format: date-time
         timeZone:
           type: string
-    Matter:
-      type: object
-      properties:
-        matterId:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        state:
-          type: string
-          enum:
-          - STATE_UNSPECIFIED
-          - OPEN
-          - CLOSED
-          - DELETED
-        matterPermissions:
-          type: array
-          items:
-            type: object
-            properties:
-              role:
-                type: string
-              accountId:
-                type: string
   securitySchemes:
     googleOAuth:
       type: oauth2
