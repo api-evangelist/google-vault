@@ -94,47 +94,6 @@ paths:
           description: Empty
 components:
   schemas:
-    Export:
-      type: object
-      properties:
-        id:
-          type: string
-        matterId:
-          type: string
-        name:
-          type: string
-        requester:
-          type: object
-          properties:
-            displayName:
-              type: string
-            email:
-              type: string
-        query:
-          $ref: '#/components/schemas/Query'
-        exportOptions:
-          type: object
-        status:
-          type: string
-          enum:
-          - EXPORT_STATUS_UNSPECIFIED
-          - COMPLETED
-          - FAILED
-          - IN_PROGRESS
-        createTime:
-          type: string
-          format: date-time
-        cloudStorageSink:
-          type: object
-        stats:
-          type: object
-          properties:
-            exportedArtifactCount:
-              type: string
-            totalArtifactCount:
-              type: string
-            sizeInBytes:
-              type: string
     Query:
       type: object
       properties:
@@ -176,6 +135,47 @@ components:
           format: date-time
         timeZone:
           type: string
+    Export:
+      type: object
+      properties:
+        id:
+          type: string
+        matterId:
+          type: string
+        name:
+          type: string
+        requester:
+          type: object
+          properties:
+            displayName:
+              type: string
+            email:
+              type: string
+        query:
+          $ref: '#/components/schemas/Query'
+        exportOptions:
+          type: object
+        status:
+          type: string
+          enum:
+          - EXPORT_STATUS_UNSPECIFIED
+          - COMPLETED
+          - FAILED
+          - IN_PROGRESS
+        createTime:
+          type: string
+          format: date-time
+        cloudStorageSink:
+          type: object
+        stats:
+          type: object
+          properties:
+            exportedArtifactCount:
+              type: string
+            totalArtifactCount:
+              type: string
+            sizeInBytes:
+              type: string
   securitySchemes:
     googleOAuth:
       type: oauth2
