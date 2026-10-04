@@ -1,0 +1,36 @@
+slug: google-vault
+provider: Google Vault
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Exports
+  spec_file: google-vault-exports-api-openapi.yml
+  capability_id: BC-150
+  capability_id_l1: BC-150
+  capability_name: Legal Management
+  confidence: 0.7
+  evidence: '"Create export" within "/v1/matters/{matterId}/exports"; description: "an information governance
+    and eDiscovery API"'
+  reason: Exports are scoped to legal matters and produce eDiscovery data sets for legal review, which
+    is Legal Management work. Kept at L1 because the export surface sits between litigation support (BC-150.20)
+    and legal operations/matter tooling (BC-150.50) and the operations do not disambiguate.
+- tag: Matters
+  spec_file: google-vault-matters-api-openapi.yml
+  capability_id: BC-150.50
+  capability_id_l1: BC-150
+  capability_name: Legal Operations Management
+  confidence: 0.7
+  evidence: '"Create matter", "Close a matter", "Reopen a matter", "Add collaborator to matter"'
+  reason: The operations are the lifecycle of a legal matter and its collaborator permissions; BC-150.50
+    explicitly names "matter management" as legal department operations. Residual uncertainty is only
+    whether these eDiscovery matters are better classed under litigation management.

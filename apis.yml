@@ -184,6 +184,9 @@ apis:
   - type: TermsOfService
     url: https://developers.google.com/terms
 common:
+  - type: CapabilityMap
+    url: capabilities/google-vault-capability-edges.yml
+    name: Google Vault Business Capability Map
   - type: Overlay
     url: overlays/google-vault-savedqueries-api-overlay.yaml
   - type: Website
