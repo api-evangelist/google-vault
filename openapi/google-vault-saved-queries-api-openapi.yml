@@ -86,6 +86,20 @@ paths:
           description: Empty
 components:
   schemas:
+    SavedQuery:
+      type: object
+      properties:
+        savedQueryId:
+          type: string
+        matterId:
+          type: string
+        displayName:
+          type: string
+        query:
+          $ref: '#/components/schemas/Query'
+        createTime:
+          type: string
+          format: date-time
     Query:
       type: object
       properties:
@@ -127,20 +141,6 @@ components:
           format: date-time
         timeZone:
           type: string
-    SavedQuery:
-      type: object
-      properties:
-        savedQueryId:
-          type: string
-        matterId:
-          type: string
-        displayName:
-          type: string
-        query:
-          $ref: '#/components/schemas/Query'
-        createTime:
-          type: string
-          format: date-time
   securitySchemes:
     googleOAuth:
       type: oauth2
