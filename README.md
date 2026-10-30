@@ -1,4 +1,4 @@
-# Google Vault (google-vault)
+# Google Vault
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,58 +64,164 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-A collection of APIs for Google Vault, an information governance and eDiscovery tool for Google Workspace.
+Google Vault is the information-governance, legal-hold and eDiscovery service for Google Workspace. Its REST API (vault.googleapis.com v1) lets an administrator open matters, place and lift legal holds across Gmail, Drive, Groups, Chat, Voice, Calendar and Gemini, save and count search queries, and export matching data to Google Cloud Storage. Access is OAuth 2.0 only, gated on Workspace Vault privileges, and the contract is published as a Google Discovery document rather than an OpenAPI.
 
-**APIs.json:** [https://developers.google.com/vault](https://developers.google.com/vault)
+**Areas:** eDiscovery · Legal Hold · Information Governance · Compliance · Archiving · Retention · Google Workspace · Audit
 
-## Scope
+## Google Vault on APIs.io
 
-- **Type:** Index
+Everything profiled for Google Vault is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/google-vault/](https://apis.io/providers/google-vault/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-04-28
+- [Google Vault Exports API](https://apis.io/apis/google-vault/google-vault-exports-api/) — The Exports API from Google Vault — 2 operation(s) for exports.
+- [Google Vault HeldAccounts API](https://apis.io/apis/google-vault/google-vault-heldaccounts-api/) — The HeldAccounts API from Google Vault — 2 operation(s) for heldaccounts.
+- [Google Vault Holds API](https://apis.io/apis/google-vault/google-vault-holds-api/) — The Holds API from Google Vault — 4 operation(s) for holds.
+- [Google Vault Matters API](https://apis.io/apis/google-vault/google-vault-matters-api/) — The Matters API from Google Vault — 8 operation(s) for matters.
+- [Google Vault Operations API](https://apis.io/apis/google-vault/google-vault-operations-api/) — The Operations API from Google Vault — 3 operation(s) for operations.
+- [Google Vault Saved Queries API](https://apis.io/apis/google-vault/google-vault-saved-queries-api/) — The Saved Queries API from Google Vault — 2 operation(s) for saved queries.
 
-## APIs
+### Published properties
 
-### Google Vault API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Google Vault API allows developers to manage matters, holds, searches, and exports for Google Vault. It enables programmatic access to eDiscovery and information governance capabilities for Google Workspace data.
+#### MCP servers (1)
 
-- **Human URL:** [https://developers.google.com/vault](https://developers.google.com/vault)
-- **Base URL:** `https://vault.googleapis.com`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [google-vault-mcp.yml](https://apis.io/servers/google-vault/google-vault-mcp-yml/)
 
-- Compliance
-- Data Retention
-- eDiscovery
-- Google Workspace
-- Information Governance
-- Legal Hold
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://developers.google.com/vault/reference/rest)
-- [OpenAPI](https://vault.googleapis.com/$discovery/rest?version=v1) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://developers.google.com/vault/reference/rest/v1/auth)
+- [Google Vault Agentic Access](https://apis.io/agentic-access/google-vault/google-vault-agentic-access/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Google Vault API](https://apis.io/collections/google-vault/open-google-vault/)
+- [Google Vault Exports API](https://apis.io/collections/google-vault/open-google-vault-exports-api/)
+- [Google Vault Exports HeldAccounts API](https://apis.io/collections/google-vault/open-google-vault-heldaccounts-api/)
+- [Google Vault Exports Holds API](https://apis.io/collections/google-vault/open-google-vault-holds-api/)
+- [Google Vault Exports Matters API](https://apis.io/collections/google-vault/open-google-vault-matters-api/)
+- [Google Vault Exports Operations API](https://apis.io/collections/google-vault/open-google-vault-operations-api/)
+- [Google Vault Exports SavedQueries API](https://apis.io/collections/google-vault/open-google-vault-savedqueries-api/)
+
+#### Overlays (6)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Google Vault Exports Api Overlay](https://apis.io/overlays/google-vault/google-vault-exports-api-overlay/)
+- [Google Vault Heldaccounts Api Overlay](https://apis.io/overlays/google-vault/google-vault-heldaccounts-api-overlay/)
+- [Google Vault Holds Api Overlay](https://apis.io/overlays/google-vault/google-vault-holds-api-overlay/)
+- [Google Vault Matters Api Overlay](https://apis.io/overlays/google-vault/google-vault-matters-api-overlay/)
+- [Google Vault Operations Api Overlay](https://apis.io/overlays/google-vault/google-vault-operations-api-overlay/)
+- [Google Vault Savedqueries Api Overlay](https://apis.io/overlays/google-vault/google-vault-savedqueries-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Google Vault Authentication](https://apis.io/security/google-vault/google-vault-authentication/)
+- [Google Vault Domain Security](https://apis.io/security/google-vault/google-vault-domain-security/)
+- [Google Vault Trust Center](https://apis.io/security/google-vault/google-vault-trust-center/)
+- [Google Vault Vulnerability Disclosure](https://apis.io/security/google-vault/google-vault-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Google Vault Scopes](https://apis.io/scopes/google-vault/google-vault-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Google Vault Plans Pricing](https://apis.io/plans/google-vault/google-vault-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Google Vault Rate Limits](https://apis.io/rate-limits/google-vault/google-vault-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Google Vault Finops](https://apis.io/finops/google-vault/google-vault-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.google.com/)
+- [Documentation](https://developers.google.com/workspace/vault/guides)
+- [Getting started](https://developers.google.com/workspace/vault/quickstart/python)
+- [API reference](https://developers.google.com/workspace/vault/reference/rest)
 - [Pricing](https://workspace.google.com/pricing.html)
-- [Terms of Service](https://developers.google.com/terms)
-- [Postman Collection](collections/google-vault.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/google-vault.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/googleworkspace)
-- [Getting Started](https://developers.google.com/vault/quickstart)
-- [Authentication](https://developers.google.com/identity/protocols/oauth2)
-- [Console](https://console.cloud.google.com/)
-- [Status Page](https://www.google.com/appsstatus/dashboard/)
-- [Changelog](https://developers.google.com/vault/release-notes)
+- [Sign up](https://workspace.google.com/business/signup/welcome)
+- [Support](https://developers.google.com/workspace/vault/support)
+- [Changelog](https://developers.google.com/workspace/vault/release-notes)
 - [Blog](https://workspace.google.com/blog/)
+- [Terms of service](https://developers.google.com/terms)
+- [Privacy policy](https://policies.google.com/privacy)
+- [GitHub](https://github.com/googleworkspace)
+- [Status](https://www.google.com/appsstatus/dashboard/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 61.1** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 46.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 60.5 |
+
+**Agent readiness 35.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/google-vault/](https://apis.io/providers/google-vault/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Google Vault: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/google-vault/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
